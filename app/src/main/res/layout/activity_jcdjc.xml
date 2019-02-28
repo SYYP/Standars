@@ -13,7 +13,7 @@
         android:layout_height="match_parent"></com.baidu.mapapi.map.MapView>
 
     <LinearLayout
-    android:visibility="gone"
+
         android:id="@+id/liner_message"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
