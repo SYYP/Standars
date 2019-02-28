@@ -131,7 +131,10 @@
         <activity android:name=".rmonactivity.RmonStateActivity" />
         <activity android:name=".rmonactivity.RunDataTwoActivity" />
         <activity android:name=".Activity.RealMonitorActivity"></activity>
-        <activity android:name=".Activity.BzjcActivity"></activity>
+        <activity
+            android:name=".Activity.BzjcActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Activity.JcejcActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

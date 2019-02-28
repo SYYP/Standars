@@ -12,6 +12,7 @@
     <color name="deep_gray">#555555</color>
     <color name="deep_red">#FF0033</color>
     <color name="light_yellow2">#ADD8E6</color>
+    <color name="background_bg">#FFB6E7F7</color>
     <color name="border_color">#817F80</color>
     <color name="blue">#0000ff</color>
     <color name="map_ground">#FFD5ED98</color>

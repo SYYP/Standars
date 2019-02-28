@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.smartwasser.yunzhishui.R;
 
@@ -31,7 +32,7 @@ import com.smartwasser.yunzhishui.R;
  * Date: 2019-02-28 10:30
  */
 public class BzjcDtFragment extends Fragment {
-    private MapView mMapView;
+    private TextureMapView mMapView;
     private BaiduMap mBaiduMap;
     // 定位相关
     LocationClient mLocClient;
@@ -50,7 +51,7 @@ public class BzjcDtFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_bzssjc, null);
         //初始化地图
-        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView = (TextureMapView) view.findViewById(R.id.mapView);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         return view;
@@ -156,5 +157,14 @@ public class BzjcDtFragment extends Fragment {
 
         }
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            doLocation();
+            addMark();
+        }
     }
 }

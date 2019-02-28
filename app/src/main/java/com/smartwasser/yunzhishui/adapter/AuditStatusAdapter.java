@@ -25,17 +25,14 @@ public class AuditStatusAdapter extends BaseAdapter{
     public int getCount() {
         return mAudit.getData().getPayOperationProcess().getRows().size();
     }
-
     @Override
     public Object getItem(int position) {
         return null;
     }
-
     @Override
     public long getItemId(int position) {
         return 0;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
