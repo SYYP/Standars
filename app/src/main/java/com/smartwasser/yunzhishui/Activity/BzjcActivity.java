@@ -21,7 +21,7 @@ import com.smartwasser.yunzhishui.fragment.BzjcDtFragment;
  * Name: BzjcActivity
  * Author: Administrator
  * Comment: //TODO
- * Date: 2019-02-28 09:33
+ * Date: 2019-02-28 09:33ytjtty
  */
 public class BzjcActivity extends AppCompatActivity implements View.OnClickListener {
     private Fragment currentf;
