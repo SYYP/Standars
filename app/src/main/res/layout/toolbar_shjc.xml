@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base47dp"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <ImageButton
+                android:layout_marginLeft="@dimen/base13dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/button_fan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fanhu"
+                />
+             <TextView
+                 android:id="@+id/tv_toolbar_zhu"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="@dimen/base12dp"
+                 android:textColor="@android:color/white"
+                 />
+        <TextView
+            android:id="@+id/tv_toolbar_centext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/base19dp"
+            android:text="@string/bzssjc"
+            android:layout_centerInParent="true" />
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:text="@string/style_toolbar"
+        android:id="@+id/text_serc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/base18dp"
+        android:layout_marginEnd="@dimen/base20dp"
+        />
+
+</RelativeLayout>

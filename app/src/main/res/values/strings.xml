@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">云智水</string>
     <string name="register_name_digits">.0123456789%</string>
+    <string name="style_toolbar">切换样式</string>
+    <string name="bzssjc">泵站实时监测</string>
 </resources>

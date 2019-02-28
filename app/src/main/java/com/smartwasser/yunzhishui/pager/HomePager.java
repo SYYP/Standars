@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smartwasser.yunzhishui.Activity.BzjcActivity;
 import com.smartwasser.yunzhishui.Activity.DataMainActivity;
+import com.smartwasser.yunzhishui.Activity.RealMonitorActivity;
 import com.smartwasser.yunzhishui.alarm.AlarmActivity;
 import com.smartwasser.yunzhishui.alarm.StatisticsActivity;
 import com.smartwasser.yunzhishui.floodcontrolactivity.FloodcontrolActivity;
@@ -34,10 +36,10 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
     private SwipeRefreshLayout downRefresh;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
-    private String[] mText ={"远程监控","预报预警","汇总统计"};
+    private String[] mText ={"远程监控","预报预警","汇总统计","实时监测"};
 //    private String[] mText ={"生产数据","生产成本","远程监控","设备运行","污泥运输","生产指标","采购","防汛信息","工艺预测","远程调控"};
 //    private int[] icon={R.drawable.home_11,R.drawable.home_22,R.drawable.home_33,R.drawable.home_44,R.drawable.home_55,R.drawable.home_66,R.drawable.home_77,R.drawable.home_99,R.drawable.home_88,R.drawable.home_10};
-    private int[] icon={R.drawable.home_33,R.drawable.home_11,R.drawable.home_22,};
+    private int[] icon={R.drawable.home_33,R.drawable.home_11,R.drawable.home_22,R.drawable.home_44};
 
     public HomePager(Context context) {
         super(context);
@@ -140,8 +142,10 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
                                 break;
                             case 3:
                                 /**设备运行*/
-                                Intent intent3=new Intent(context,DeviceActivity.class);
-                                context.startActivity(intent3);
+//                                Intent intent3=new Intent(context,DeviceActivity.class);
+//                                context.startActivity(intent3);
+                                Intent intent3=new Intent(context,RealMonitorActivity.class);
+                                 context.startActivity(intent3);
                                 break;
                             case 4:
                                 /**跳转到污泥运输*/

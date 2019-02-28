@@ -34,7 +34,7 @@
         >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="h24gBGcLkEh1172xmDwkoSV8dKkUcW8u"/>
+            android:value="X6lhCPCgCcU0TGpXk93gGocqOh6Hvx8Q"/>
         <activity android:name="com.smartwasser.yunzhishui.Activity.SplashActivity">
         <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -128,6 +128,8 @@
         <activity android:name=".rmonactivity.RunDataActivity"/>
         <activity android:name=".rmonactivity.RmonStateActivity"/>
         <activity android:name=".rmonactivity.RunDataTwoActivity"/>
+        <activity android:name=".Activity.RealMonitorActivity"></activity>
+        <activity android:name=".Activity.BzjcActivity"></activity>
         <activity android:name=".rmonactivity.RunDataReslutZtActivity"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation|screenSize"
