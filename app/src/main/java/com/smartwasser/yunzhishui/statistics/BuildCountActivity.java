@@ -244,6 +244,7 @@ public class BuildCountActivity extends BaseActivity {
                     @Override
                     public void onItemLongClick(View item, int position) {
                         Log.e("长按事件",position+"");
+
                     }
                 })
                 .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
@@ -267,6 +268,5 @@ public class BuildCountActivity extends BaseActivity {
         DisplayUtil.screenhightPx = dm.heightPixels;
         DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
-
     }
 }
