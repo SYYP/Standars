@@ -28,7 +28,7 @@ public class BzjcActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton mButtonFan;
     private TextView mTvToolbarZhu;
     /**
-     * 泵站实时监测
+     * 泵站实时监测hgghgh
      */
     private TextView mTvToolbarCentext;
     private Toolbar mToolbar2;
