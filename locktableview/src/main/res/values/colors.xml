@@ -14,6 +14,7 @@
     <color name="light_yellow2">#ADD8E6</color>
     <color name="border_color">#817F80</color>
     <color name="blue">#0000ff</color>
+    <color name="map_ground">#FFD5ED98</color>
     <color name="transparent">#00000000</color>
     <color name="green">#0F0</color>
     <color name="red">#FF0000</color>

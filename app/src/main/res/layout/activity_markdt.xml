@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_mark">
+    android:background="@drawable/select_drawable_mark">
 
 
       <LinearLayout
+          android:layout_margin="10dp"
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="match_parent">

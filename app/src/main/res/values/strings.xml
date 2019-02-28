@@ -3,4 +3,11 @@
     <string name="register_name_digits">.0123456789%</string>
     <string name="style_toolbar">切换样式</string>
     <string name="bzssjc">泵站实时监测</string>
+    <string name="jc_title">水质监测信息</string>
+    <string name="jcdmc">监测点名称:</string>
+    <string name="cbzb">超标指标:</string>
+    <string name="sypah">上游排水户:</string>
+    <string name="syxqx">受影响区域:</string>
+    <string name="ckpshxx">查看排水户信息:</string>
+    <string name="ckqbjcsj">查看全部监测数据:</string>
 </resources>

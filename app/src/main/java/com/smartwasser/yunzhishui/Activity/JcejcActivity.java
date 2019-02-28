@@ -3,9 +3,11 @@ package com.smartwasser.yunzhishui.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +32,14 @@ import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.utils.PopListViewUtils;
 
 /**
- * Name: BzssjcActivity
+ * Name: JcejcActivity
  * Author: Administrator
  * Comment: //TODO
  * Date: 2019-02-23 12:26
  * 泵站实时监测
  */
-public class BzssjcActivity extends Activity {
-
+public class JcejcActivity extends Activity implements View.OnClickListener {
     private ImageButton mButtonMenu;
-    /**
-     * 你好啊
-     */
     private TextView mTvToolbar;
     private Toolbar mToolbar;
     private ImageButton mNormSer;
@@ -56,27 +54,43 @@ public class BzssjcActivity extends Activity {
     private float mCurrentAccracy;
     boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
-    private String info,info2,info3;
-    private PopListViewUtils plu=new PopListViewUtils(this);
-    OverlayOptions option=null;
-    OverlayOptions option1=null;
+    private String info, info2, info3;
+    OverlayOptions option = null;
+    OverlayOptions option1 = null;
     private View mView;
+    private TextView mTextJcedcs;
+    private TextView mTextCbzs;
+    private TextView mTextSypsh;
+    private TextView mTextSyxqx;
+    /**
+     * 查看排水户信息:
+     */
+    private Button mBtnCkyhx;
+    /**
+     * 查看全部监测数据:
+     */
+    private Button mBtnCkqbsj;
+    private LinearLayout mLinerMessage;
+    private ImageView mImgPause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bzssjc);
+        setContentView(R.layout.activity_jcdjc);
+        initView();
         mButtonMenu = (ImageButton) findViewById(R.id.button_menu);
         mTvToolbar = (TextView) findViewById(R.id.tv_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNormSer = (ImageButton) findViewById(R.id.norm_ser);
+        mImgPause = findViewById(R.id.img_pause);
+        mImgPause.setVisibility(View.GONE);
         mTvToolbar.setText("泵站实时监测");
-         //初始化地图
+        //初始化地图
         mMapView = (MapView) findViewById(R.id.mapView);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         doLocation();
-         addMark();
+        addMark();
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
@@ -84,23 +98,22 @@ public class BzssjcActivity extends Activity {
                 info2 = (String) marker.getExtraInfo().get("info2");
                 info3 = (String) marker.getExtraInfo().get("info3");
                 /**弹出popupwind*/
-                View view = View.inflate(BzssjcActivity.this, R.layout.activity_markdt, null);
+                View view = View.inflate(JcejcActivity.this, R.layout.activity_markdt, null);
                 final InfoWindow mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), marker.getPosition(), -80,
-                new InfoWindow.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick() {
-                       mBaiduMap.hideInfoWindow();
-                    }
-                });
+                        new InfoWindow.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick() {
+                                mBaiduMap.hideInfoWindow();
+                                mLinerMessage.setVisibility(View.VISIBLE);
+                            }
+                        });
                 mBaiduMap.showInfoWindow(mInfoWindow);
-
-                //获取到mark的信息后，创建dialog
-                Toast.makeText(BzssjcActivity.this,info+info2+info3,Toast.LENGTH_SHORT).show();
-                  addDialog();
+                addDialog();
                 return false;
             }
         });
     }
+
     //创建dialog
     private void addDialog() {
 //        BaseDialog.Builder builder = new BaseDialog.Builder(this);
@@ -120,57 +133,47 @@ public class BzssjcActivity extends Activity {
 //        dialog.show();
 
     }
-    private void getZaiw(LatLng point, String s){
-        //构建文字Option对象，用于在地图上添加文字
-        OverlayOptions textOption = new TextOptions()
-                .bgColor(0xAA000000)
-                .fontSize(30)
-                .fontColor(0xFFFFFFFF)
-                .text(s)
-                .rotate(0)
-                .position(point);
-        //在地图上添加该文字对象并显示
-        mBaiduMap.addOverlay(textOption);
-    }
+
+
     /**
-     *   添加mark
+     * 添加mark
      */
     private void addMark() {
         // 构建Marker图标
         BitmapDescriptor bitmap = null;
         BitmapDescriptor bitmap2 = null;
-        BitmapDescriptor bitmap3= null;
-        BitmapDescriptor bitmap4= null;
+        BitmapDescriptor bitmap3 = null;
+        BitmapDescriptor bitmap4 = null;
         bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.icon_20);
-        bitmap= BitmapDescriptorFactory.fromResource(R.drawable.icon_21);
-        bitmap3= BitmapDescriptorFactory.fromResource(R.drawable.icon_22);
-        bitmap4= BitmapDescriptorFactory.fromResource(R.drawable.icon_23);
+        bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_21);
+        bitmap3 = BitmapDescriptorFactory.fromResource(R.drawable.icon_22);
+        bitmap4 = BitmapDescriptorFactory.fromResource(R.drawable.icon_23);
         LatLng llA;
         LatLng llB;
 
         Marker marker = null;
         Marker marker1 = null;
-           //设置经纬度
+        //设置经纬度
         for (int i = 0; i < 10; i++) {
-            llA = new LatLng(40.086318789+i,116.320436458+i);
-            llB = new LatLng(40.086318789+i+1,116.320436458+i-1);
+            llA = new LatLng(40.086318789 + i, 116.320436458 + i);
+            llB = new LatLng(40.086318789 + i + 1, 116.320436458 + i - 1);
             option = new MarkerOptions().position(llA).icon(bitmap3);
             option1 = new MarkerOptions().position(llB).icon(bitmap4);
             marker1 = (Marker) mBaiduMap.addOverlay(option);
             marker = (Marker) mBaiduMap.addOverlay(option1);
             //为marker添加识别标记信息
             Bundle bundle = new Bundle();
-            bundle.putSerializable("info","你好吗");
-            bundle.putSerializable("info2","这是一个测试"+i);
-            bundle.putSerializable("info3","好的没有问题");
+            bundle.putSerializable("info", "你好吗");
+            bundle.putSerializable("info2", "这是一个测试" + i);
+            bundle.putSerializable("info3", "好的没有问题");
             marker.setExtraInfo(bundle);
             marker1.setExtraInfo(bundle);
             marker.setDraggable(true);
-            marker1.setDraggable(true );
-            getZaiw(llB,"这是一个地点");
+            marker1.setDraggable(true);
         }
 
     }
+
     /**
      * 进行定位
      */
@@ -185,6 +188,36 @@ public class BzssjcActivity extends Activity {
         mLocClient.setLocOption(option);
         mLocClient.start();
     }
+
+    private void initView() {
+        mMapView = (MapView) findViewById(R.id.mapView);
+        mTextJcedcs = (TextView) findViewById(R.id.text_jcedcs);
+        mTextCbzs = (TextView) findViewById(R.id.text_cbzs);
+        mTextSypsh = (TextView) findViewById(R.id.text_sypsh);
+        mTextSyxqx = (TextView) findViewById(R.id.text_syxqx);
+        mBtnCkyhx = (Button) findViewById(R.id.btn_ckyhx);
+        mBtnCkyhx.setOnClickListener(this);
+        mBtnCkqbsj = (Button) findViewById(R.id.btn_ckqbsj);
+        mBtnCkqbsj.setOnClickListener(this);
+        mLinerMessage = (LinearLayout) findViewById(R.id.liner_message);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.btn_ckyhx:
+                break;
+            case R.id.btn_ckqbsj:
+                break;
+            case R.id.img_pause:
+                   mLinerMessage.setVisibility(View.GONE);
+                break;
+
+        }
+    }
+
     /**
      * 定位SDK监听函数
      */

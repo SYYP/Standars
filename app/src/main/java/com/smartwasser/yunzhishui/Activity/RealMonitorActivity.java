@@ -57,7 +57,7 @@ public class RealMonitorActivity extends BaseActivity {
                         startActivity(intent);
                         break;
                     case 1:
-                        Intent intent2 = new Intent(RealMonitorActivity.this, AlarmQueryActivity.class);
+                        Intent intent2 = new Intent(RealMonitorActivity.this, JcejcActivity.class);
                         startActivity(intent2);
                         break;
                   default:

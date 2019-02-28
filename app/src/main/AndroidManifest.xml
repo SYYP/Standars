@@ -1,191 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smartwasser.yunzhishui">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--百度地图权限-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
-        android:supportsRtl="true"
-        android:label="@string/app_name"
-        android:icon="@drawable/logo"
-        android:allowBackup="true"
-        android:theme="@style/AppTheme"
         android:name="com.smartwasser.yunzhishui.App"
-        >
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="X6lhCPCgCcU0TGpXk93gGocqOh6Hvx8Q"/>
+            android:value="X6lhCPCgCcU0TGpXk93gGocqOh6Hvx8Q" />
+
         <activity android:name="com.smartwasser.yunzhishui.Activity.SplashActivity">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
-       </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.smartwasser.yunzhishui.Activity.GuideActivity"></activity>
         <activity android:name=".Activity.DataMainActivity"></activity>
         <activity android:name=".Activity.LoginActivity"></activity>
         <activity android:name=".Activity.RegisterActivity"></activity>
         <activity android:name=".Activity.ForgetPasswordActivity"></activity>
-        <activity android:name=".Activity.MainActivity"/>
-        <activity android:name=".Activity.NoticeActivity"/>
-        <activity android:name=".Activity.WaterworksDayActivity"/>
-        <activity android:name=".Activity.AddActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity android:name=".Activity.LookDataActivity"/>
-        <activity android:name=".Activity.AmendActivity"
-                 android:windowSoftInputMode="adjustPan"
-            />
-        <activity android:name=".Activity.AuditActivity"/>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.NoticeActivity" />
+        <activity android:name=".Activity.WaterworksDayActivity" />
+        <activity
+            android:name=".Activity.AddActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activity.LookDataActivity" />
+        <activity
+            android:name=".Activity.AmendActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activity.AuditActivity" />
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Activity.SingleMultipleActivity"/>
-        <activity android:name=".Activity.DayNormHomeActivity"/>
-        <activity android:name=".Activity.NormTrendLookActivity"/>
-        <activity android:name=".Activity.MuchTrendLookActivity"/>
-        <activity android:name=".sludgeactivity.WeightActivity"/>
-        <activity android:name=".sludgeactivity.TrafficMainActivity"/>
-        <activity android:name=".deviceactivity.LedgerEditActivity"/>
-        <activity android:name=".deviceactivity.LedgerActivity"/>
-        <activity android:name=".deviceactivity.LedgerDetailActivity"/>
-        <activity android:name=".deviceactivity.HitchActivity"/>
-        <activity android:name=".deviceactivity.HitchNotConfirmedActivity"/>
-        <activity android:name=".deviceactivity.HitchUpdateActivity"/>
-        <activity android:name=".deviceactivity.WorkDanMxUpdateActivity"/>
-        <activity android:name=".deviceactivity.WorkDanFeedbackActivity"/>
-        <activity android:name=".deviceactivity.WorkDanDistributeActivity"/>
-        <activity android:name=".deviceactivity.WorkDanNotCompletActivity"/>
-        <activity android:name=".deviceactivity.WorkDanUpdateActivity"/>
-        <activity android:name=".deviceactivity.AddHitchActivity"/>
-        <activity android:name=".deviceactivity.AddLedgerActivity"/>
-        <activity android:name=".deviceactivity.AddWorkDanActivity"/>
-        <activity android:name=".deviceactivity.AddWorkDanMxActivity"/>
-        <activity android:name=".deviceactivity.EquipSelectActivity"/>
-        <activity android:name=".deviceactivity.PhenomenaActivity"/>
-        <activity android:name=".deviceactivity.FeedbackMxActivity"/>
-        <activity android:name=".deviceactivity.DeviceActivity"/>
-        <activity android:name=".sludgeactivity.AddWeightActivity"/>
-        <activity android:name=".sludgeactivity.WeightUpdateActivity"/>
-        <activity android:name=".sludgeactivity.CarActivity"/>
-        <activity android:name=".sludgeactivity.TransportationActivity"/>
-        <activity android:name=".sludgeactivity.TrasportadetailsActivity"/>
-        <activity android:name=".sludgeactivity.RealTimeMonitorActivity"/>
-        <activity android:name=".sludgeactivity.RealTimeCarActivity"/>
-        <activity android:name=".sludgeactivity.TrajectoryActivity"/>
-        <activity android:name=".sludgeactivity.TrajectoryCarActivity"/>
-        <activity android:name=".sludgeactivity.CarMonitorActivity"/>
-        <activity android:name=".sludgeactivity.HistoricalTrackActivity"/>
-        <activity android:name=".productionactivity.ProductionActivity"/>
-        <activity android:name=".productionactivity.ReimbursementActivity"/>
-        <activity android:name=".productionactivity.AddReimburseTypeActivity"/>
-        <activity android:name=".productionactivity.ReimburseDetailsActivity"/>
-        <activity android:name=".productionactivity.AuditStatusActivity"/>
-        <activity android:name=".productionactivity.ReimburseAuditActivity"/>
-        <activity android:name=".productionactivity.AddReimburseActivity"/>
-        <activity android:name=".productionactivity.BusinesssuBjectsActivity"/>
-        <activity android:name=".floodcontrolactivity.FloodcontrolActivity"/>
-        <activity android:name=".floodcontrolactivity.RainfallActivity"/>
-        <activity android:name=".floodcontrolactivity.FieldRainActivity"/>
-        <activity android:name=".floodcontrolactivity.PumpstationActivity"/>
-        <activity android:name=".productionactivity.ContractActivity"/>
-        <activity android:name=".productionactivity.ContractDetailsActicity"/>
-        <activity android:name=".productionactivity.ContractLookActivity"/>
-        <activity android:name=".productionactivity.ContractQueActivity"/>
-        <activity android:name=".productionactivity.ContractDetailsQueActicity"/>
-        <activity android:name=".productionactivity.ContractLookQueActivity"/>
-        <activity android:name=".productionactivity.PaymentActivity"/>
-        <activity android:name=".productionactivity.PaymentDetailsActicity"/>
-        <activity android:name=".productionactivity.PaymentLookActivity"/>
-        <activity android:name=".productionactivity.AuditDetailsActivity"/>
-        <activity android:name=".productionactivity.AccountingAuditActivity"/>
-        <activity android:name=".productionactivity.FunctionAuditActivity"/>
-        <activity android:name=".productionactivity.FfgileadAuditActivity"/>
-        <activity android:name=".rmonactivity.RmonActivity"/>
-        <activity android:name=".rmonactivity.RmonRealTimeActivity"/>
-        <activity android:name=".rmonactivity.RunDataActivity"/>
-        <activity android:name=".rmonactivity.RmonStateActivity"/>
-        <activity android:name=".rmonactivity.RunDataTwoActivity"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".Activity.SingleMultipleActivity" />
+        <activity android:name=".Activity.DayNormHomeActivity" />
+        <activity android:name=".Activity.NormTrendLookActivity" />
+        <activity android:name=".Activity.MuchTrendLookActivity" />
+        <activity android:name=".sludgeactivity.WeightActivity" />
+        <activity android:name=".sludgeactivity.TrafficMainActivity" />
+        <activity android:name=".deviceactivity.LedgerEditActivity" />
+        <activity android:name=".deviceactivity.LedgerActivity" />
+        <activity android:name=".deviceactivity.LedgerDetailActivity" />
+        <activity android:name=".deviceactivity.HitchActivity" />
+        <activity android:name=".deviceactivity.HitchNotConfirmedActivity" />
+        <activity android:name=".deviceactivity.HitchUpdateActivity" />
+        <activity android:name=".deviceactivity.WorkDanMxUpdateActivity" />
+        <activity android:name=".deviceactivity.WorkDanFeedbackActivity" />
+        <activity android:name=".deviceactivity.WorkDanDistributeActivity" />
+        <activity android:name=".deviceactivity.WorkDanNotCompletActivity" />
+        <activity android:name=".deviceactivity.WorkDanUpdateActivity" />
+        <activity android:name=".deviceactivity.AddHitchActivity" />
+        <activity android:name=".deviceactivity.AddLedgerActivity" />
+        <activity android:name=".deviceactivity.AddWorkDanActivity" />
+        <activity android:name=".deviceactivity.AddWorkDanMxActivity" />
+        <activity android:name=".deviceactivity.EquipSelectActivity" />
+        <activity android:name=".deviceactivity.PhenomenaActivity" />
+        <activity android:name=".deviceactivity.FeedbackMxActivity" />
+        <activity android:name=".deviceactivity.DeviceActivity" />
+        <activity android:name=".sludgeactivity.AddWeightActivity" />
+        <activity android:name=".sludgeactivity.WeightUpdateActivity" />
+        <activity android:name=".sludgeactivity.CarActivity" />
+        <activity android:name=".sludgeactivity.TransportationActivity" />
+        <activity android:name=".sludgeactivity.TrasportadetailsActivity" />
+        <activity android:name=".sludgeactivity.RealTimeMonitorActivity" />
+        <activity android:name=".sludgeactivity.RealTimeCarActivity" />
+        <activity android:name=".sludgeactivity.TrajectoryActivity" />
+        <activity android:name=".sludgeactivity.TrajectoryCarActivity" />
+        <activity android:name=".sludgeactivity.CarMonitorActivity" />
+        <activity android:name=".sludgeactivity.HistoricalTrackActivity" />
+        <activity android:name=".productionactivity.ProductionActivity" />
+        <activity android:name=".productionactivity.ReimbursementActivity" />
+        <activity android:name=".productionactivity.AddReimburseTypeActivity" />
+        <activity android:name=".productionactivity.ReimburseDetailsActivity" />
+        <activity android:name=".productionactivity.AuditStatusActivity" />
+        <activity android:name=".productionactivity.ReimburseAuditActivity" />
+        <activity android:name=".productionactivity.AddReimburseActivity" />
+        <activity android:name=".productionactivity.BusinesssuBjectsActivity" />
+        <activity android:name=".floodcontrolactivity.FloodcontrolActivity" />
+        <activity android:name=".floodcontrolactivity.RainfallActivity" />
+        <activity android:name=".floodcontrolactivity.FieldRainActivity" />
+        <activity android:name=".floodcontrolactivity.PumpstationActivity" />
+        <activity android:name=".productionactivity.ContractActivity" />
+        <activity android:name=".productionactivity.ContractDetailsActicity" />
+        <activity android:name=".productionactivity.ContractLookActivity" />
+        <activity android:name=".productionactivity.ContractQueActivity" />
+        <activity android:name=".productionactivity.ContractDetailsQueActicity" />
+        <activity android:name=".productionactivity.ContractLookQueActivity" />
+        <activity android:name=".productionactivity.PaymentActivity" />
+        <activity android:name=".productionactivity.PaymentDetailsActicity" />
+        <activity android:name=".productionactivity.PaymentLookActivity" />
+        <activity android:name=".productionactivity.AuditDetailsActivity" />
+        <activity android:name=".productionactivity.AccountingAuditActivity" />
+        <activity android:name=".productionactivity.FunctionAuditActivity" />
+        <activity android:name=".productionactivity.FfgileadAuditActivity" />
+        <activity android:name=".rmonactivity.RmonActivity" />
+        <activity android:name=".rmonactivity.RmonRealTimeActivity" />
+        <activity android:name=".rmonactivity.RunDataActivity" />
+        <activity android:name=".rmonactivity.RmonStateActivity" />
+        <activity android:name=".rmonactivity.RunDataTwoActivity" />
         <activity android:name=".Activity.RealMonitorActivity"></activity>
         <activity android:name=".Activity.BzjcActivity"></activity>
-        <activity android:name=".rmonactivity.RunDataReslutZtActivity"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".Activity.JcejcActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity android:name=".rmonactivity.SelectResultActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".rmonactivity.RunDataReslutZtActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity android:name=".rmonactivity.RunDataReslutActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".rmonactivity.SelectResultActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity android:name=".rmonactivity.RmonDataActivity"/>
-        <activity android:name=".purchaseactivity.QrobotActivity"/>
-        <activity android:name=".purchaseactivity.QuoteDetailActivity"/>
-        <activity android:name=".purchaseactivity.QuoteMangerActivity"/>
-        <activity android:name=".purchaseactivity.EnlistActivity"/>
-        <activity android:name=".purchaseactivity.EnlistDetailActivity"/>
-        <activity android:name=".purchaseactivity.PurchaseActivity"/>
-        <activity android:name=".purchaseactivity.AppendixActivity"/>
-        <activity android:name=".productionactivity.AddContractActivity"/>
-        <activity android:name=".productionactivity.ReimburseEditActivity"/>
-        <activity android:name=".productionactivity.ContractEditActivity"/>
-        <activity android:name=".productionactivity.AddPaymentActivity"/>
-        <activity android:name=".productionactivity.PaymentEditActivity"/>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".rmonactivity.RunDataReslutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity android:name=".rmonactivity.RmonDataActivity" />
+        <activity android:name=".purchaseactivity.QrobotActivity" />
+        <activity android:name=".purchaseactivity.QuoteDetailActivity" />
+        <activity android:name=".purchaseactivity.QuoteMangerActivity" />
+        <activity android:name=".purchaseactivity.EnlistActivity" />
+        <activity android:name=".purchaseactivity.EnlistDetailActivity" />
+        <activity android:name=".purchaseactivity.PurchaseActivity" />
+        <activity android:name=".purchaseactivity.AppendixActivity" />
+        <activity android:name=".productionactivity.AddContractActivity" />
+        <activity android:name=".productionactivity.ReimburseEditActivity" />
+        <activity android:name=".productionactivity.ContractEditActivity" />
+        <activity android:name=".productionactivity.AddPaymentActivity" />
+        <activity android:name=".productionactivity.PaymentEditActivity" />
         <activity android:name=".alarm.StatisticsActivity"></activity>
         <activity android:name=".alarm.AlarmActivity"></activity>
-        <activity android:name=".datatable.WringTableActivity"
-            android:screenOrientation="landscape"
+        <activity
+            android:name=".datatable.WringTableActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            ></activity>
-        <activity android:name=".alarm.AlarmQueryActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".alarm.AlarmQueryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            ></activity>
-        <activity android:name=".statistics.ContInflowActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".statistics.ContInflowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            ></activity>
-        <activity android:name=".statistics.InterestCountActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".statistics.InterestCountActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            >
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".statistics.BuildCountActivity"></activity>
 
         <activity android:name=".statistics.EcectrMothActivity"></activity>
 
         <activity android:name=".statistics.ElectricCountActivity"></activity>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" >
-                </action>
+                <action android:name="com.baidu.location.service_v2.2"></action>
             </intent-filter>
         </service>
     </application>
