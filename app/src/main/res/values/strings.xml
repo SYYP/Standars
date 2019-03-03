@@ -10,4 +10,9 @@
     <string name="syxqx">受影响区域:</string>
     <string name="ckpshxx">查看排水户信息:</string>
     <string name="ckqbjcsj">查看全部监测数据:</string>
+    <string name="bzbh">泵站编号</string>
+    <string name="bzmc">泵站名称</string>
+    <string name="bzyxzt">泵站运行状态</string>
+    <string name="ysl">抽升量m²/s</string>
+    <string name="yl">雨量mm</string>
 </resources>

@@ -41,9 +41,16 @@ public class RealMonitorActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mListView = findViewById(R.id.wraing_list);
         button_menu.setVisibility(View.VISIBLE);
+        button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
         tv_toolbar.setText("监测列表");
         setSupportActionBar(toolbar);
+        button_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

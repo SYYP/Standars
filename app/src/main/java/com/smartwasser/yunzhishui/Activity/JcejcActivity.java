@@ -83,7 +83,7 @@ public class JcejcActivity extends Activity implements View.OnClickListener {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNormSer = (ImageButton) findViewById(R.id.norm_ser);
         mImgPause = findViewById(R.id.img_pause);
-        mImgPause.setVisibility(View.GONE);
+        mImgPause.setOnClickListener(this);
         mTvToolbar.setText("泵站实时监测");
         //初始化地图
         mMapView = (MapView) findViewById(R.id.mapView);
