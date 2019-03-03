@@ -80,6 +80,7 @@ public class JcejcActivity extends Activity implements View.OnClickListener {
         initView();
         mButtonMenu = (ImageButton) findViewById(R.id.button_menu);
         mTvToolbar = (TextView) findViewById(R.id.tv_toolbar);
+        mButtonMenu.setBackgroundResource(R.drawable.fanhu);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNormSer = (ImageButton) findViewById(R.id.norm_ser);
         mImgPause = findViewById(R.id.img_pause);
@@ -91,6 +92,12 @@ public class JcejcActivity extends Activity implements View.OnClickListener {
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         doLocation();
         addMark();
+        mButtonMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {

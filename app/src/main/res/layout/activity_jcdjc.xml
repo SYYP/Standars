@@ -15,11 +15,12 @@
         android:layout_below="@id/incl"></com.baidu.mapapi.map.MapView>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/liner_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone">
+    >
 
         <LinearLayout
 
@@ -44,10 +45,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/base2dp"
-                        android:padding="8dp"
                         android:text="@string/jc_title"
                         android:textSize="16sp" />
-
                     <ImageView
                         android:id="@+id/img_pause"
                         android:layout_width="wrap_content"
@@ -55,7 +54,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/base25dp"
-                        android:padding="2dp"
                         android:src="@drawable/img_pause" />
 
                 </RelativeLayout>
@@ -64,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_gray2"
-                    android:padding="2dp">
+                  >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -76,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/base42dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:text="@string/jcdmc"
                             android:textColor="@color/light_yellow2"
                             android:textSize="15sp" />
@@ -89,9 +87,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/base42dp"
                         android:layout_weight="1"
-                        android:padding="8dp"
+                        android:padding="5dp"
                         android:textColor="@color/light_yellow2"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -106,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_gray2"
-                    android:padding="2dp">
+                 >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -118,10 +116,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/base42dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:text="@string/cbzb"
                             android:textColor="@color/light_yellow2"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
@@ -131,19 +129,19 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/base42dp"
                         android:layout_weight="1"
-                        android:padding="8dp"
+                        android:padding="5dp"
                         android:textColor="@color/light_yellow2"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
-
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
                         <Button
+                            android:textSize="14sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/base40dp"
+                            android:layout_height="@dimen/base30dp"
                             android:background="@drawable/login_loginbutton_pressed"
                             android:text="查看趋势" />
                     </LinearLayout>
@@ -160,7 +158,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp">
+                  >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -172,10 +170,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/base42dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:text="@string/sypah"
                             android:textColor="@color/light_yellow2"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
@@ -185,9 +183,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/base42dp"
                         android:layout_weight="2"
-                        android:padding="8dp"
+                        android:padding="5dp"
                         android:textColor="@color/light_yellow2"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <View
@@ -212,10 +210,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/base42dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:text="@string/syxqx"
                             android:textColor="@color/light_yellow2"
-                            android:textSize="15sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <TextView
@@ -225,9 +223,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/base42dp"
                         android:layout_weight="2"
-                        android:padding="8dp"
+                        android:padding="5dp"
                         android:textColor="@color/light_yellow2"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <View
@@ -240,11 +238,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/base40dp"
+                    android:layout_marginLeft="@dimen/base50dp"
                     android:layout_marginRight="100dp"
                     android:layout_marginTop="13dp">
 
                     <Button
+                        android:textSize="14sp"
                         android:id="@+id/btn_ckyhx"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -254,10 +253,11 @@
                         android:text="@string/ckpshxx" />
 
                     <Button
+                        android:textSize="14sp"
                         android:id="@+id/btn_ckqbsj"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/base20dp"
+                        android:layout_marginLeft="@dimen/base30dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_loginbutton_pressed"
                         android:text="@string/ckqbjcsj" />
@@ -313,8 +313,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:background="@drawable/map_pressed"
                     android:orientation="vertical">
 
@@ -326,7 +326,7 @@
                         android:padding="10dp"
                         android:text="图例"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
 
@@ -341,7 +341,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="水质指标超标"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

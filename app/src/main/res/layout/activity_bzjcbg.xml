@@ -6,7 +6,7 @@
     <LinearLayout
         android:background="@color/background_bg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/base70dp">
+        android:layout_height="@dimen/base60dp">
         <LinearLayout
             android:gravity="center"
             android:background="@drawable/backgroun_bg"

@@ -80,6 +80,12 @@ public class BzjcActivity extends AppCompatActivity implements View.OnClickListe
         mTextSerc = (TextView) findViewById(R.id.text_serc);
         mFramLayout = (FrameLayout) findViewById(R.id.fram_layout);
         mTextSerc.setOnClickListener(this);
+        mButtonFan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
