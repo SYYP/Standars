@@ -24,6 +24,7 @@ import com.smartwasser.yunzhishui.alarm.StatisticsActivity;
 import com.smartwasser.yunzhishui.floodcontrolactivity.FloodcontrolActivity;
 import com.smartwasser.yunzhishui.productionactivity.ProductionActivity;
 import com.smartwasser.yunzhishui.purchaseactivity.PurchaseActivity;
+import com.smartwasser.yunzhishui.record.HistoryRecordActivity;
 import com.smartwasser.yunzhishui.rmonactivity.RmonActivity;
 import com.smartwasser.yunzhishui.sludgeactivity.TrafficMainActivity;
 import com.smartwasser.yunzhishui.R;
@@ -149,7 +150,7 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
                                 break;
                             case 4:
                                 /**跳转到污泥运输*/
-                                Intent intent4=new Intent(context,TrafficMainActivity.class);
+                                Intent intent4=new Intent(context,HistoryRecordActivity.class);
                                 context.startActivity(intent4);
                                 break;
                             case 7:

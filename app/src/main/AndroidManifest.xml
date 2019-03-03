@@ -184,7 +184,31 @@
 
         <activity android:name=".statistics.EcectrMothActivity"></activity>
 
-        <activity android:name=".statistics.ElectricCountActivity"></activity>
+        <activity android:name=".statistics.ElectricCountActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
+        <activity android:name=".record.HistoryRecordActivity"></activity>
+        <activity android:name=".record.ElectricityCountActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
+        <activity android:name=".record.WaterCountActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
+        <activity android:name=".record.PumpStateActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
+        <activity android:name=".record.RunDataActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
+        <activity android:name=".record.FacilityStateActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            ></activity>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

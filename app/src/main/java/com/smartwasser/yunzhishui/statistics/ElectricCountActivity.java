@@ -38,7 +38,7 @@ public class ElectricCountActivity extends BaseActivity {
     private ImageButton button_menu;
     private TextView tv_toolbar;
     private TextView mRightTitle;
-private WebView mWdebView;
+    private WebView mWdebView;
     @Override
     protected int initContentView() {
         return R.layout.activity_count_inflow;

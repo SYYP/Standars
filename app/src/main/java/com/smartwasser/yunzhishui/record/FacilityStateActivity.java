@@ -1,12 +1,14 @@
-package com.smartwasser.yunzhishui.alarm;
+package com.smartwasser.yunzhishui.record;
 
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rmondjone.locktableview.DisplayUtil;
@@ -15,108 +17,139 @@ import com.rmondjone.xrecyclerview.ProgressStyle;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
-import com.smartwasser.yunzhishui.alarmbean.ContentBean;
+import com.smartwasser.yunzhishui.alarmbean.CountBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by 15810 on 2019/2/22.
+ * Created by 15810 on 2019/3/1.
  */
 
-public class AlarmQueryActivity  extends BaseActivity{
-
+public class FacilityStateActivity extends BaseActivity {
+    private List<String> mlist;
+    private ListView minitListView;
+    private LinearLayout contentView;
     private Toolbar toolbar;
     private ImageButton button_menu;
     private TextView tv_toolbar;
-    private LinearLayout mContentView;
-
+    private TextView mRightTitle;
+    private WebView mWdebView;
     @Override
     protected int initContentView() {
-        return R.layout.activity_alarmquery;
+        return R.layout.activity_facility_state;
     }
 
     @Override
     protected void initView() {
+        contentView = findViewById(R.id.facility_contentView);
         button_menu= (ImageButton) findViewById(R.id.button_menu);
+        mRightTitle = (TextView) findViewById(R.id.right_title);
         tv_toolbar= (TextView) findViewById(R.id.tv_toolbar);
         toolbar= (Toolbar) findViewById(R.id.toolbar);
-        button_menu.setVisibility(View.VISIBLE);
-//        button_menu.setBackground(R.drawable.);
-        toolbar.setTitle("");
-        tv_toolbar.setText("报警查询");
-        setSupportActionBar(toolbar);
-        button_menu.setBackgroundResource(R.drawable.fanhu);
+        mWdebView= (WebView) findViewById(R.id.facility_wb);
+        //进行webwiev的一堆设置
+        //开启本地文件读取（默认为true，不设置也可以）
+        mWdebView.getSettings().setAllowFileAccess(true);
+        //开启脚本支持
+        mWdebView.getSettings().setJavaScriptEnabled(true);
+        mWdebView.loadUrl("file:///android_asset/myechart_type3.html");
     }
 
     @Override
     protected void initListener() {
+        initDisplayOpinion();
+
+        initAdapter();
+
+
         button_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+
+        mRightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String btnText = mRightTitle.getText().toString();
+                if ("曲线".equals(btnText)){
+                    mWdebView.loadUrl("javascript:doCreatChart('line',[0,-1,0,0,-1,-2],['运行 1','停止 0','故障 -1'])");
+                    contentView.setVisibility(View.GONE);
+                    mWdebView.setVisibility(View.VISIBLE);
+                    mRightTitle.setText("表格");
+                }else {
+                    contentView.setVisibility(View.VISIBLE);
+                    mWdebView.setVisibility(View.GONE);
+                    mRightTitle.setText("曲线");
+                }
+
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        mContentView = (LinearLayout) findViewById(R.id.contentView);
-        initDisplayOpinion();
-
-        initAdapter();
+        button_menu.setVisibility(View.VISIBLE);
+        button_menu.setBackgroundResource(R.drawable.fanhu);
+        toolbar.setTitle("");
+        tv_toolbar.setText("设备状态查询");
+        setSupportActionBar(toolbar);
+        mRightTitle.setText("曲线");
     }
+
 
     private void initAdapter() {
         //构造假数据
         ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
         ArrayList<String> titleList = new ArrayList<>();
-        titleList.add("序号");
-        titleList.add("名称");
-        titleList.add("报警时间");
-        titleList.add("报警类型");
-        titleList.add("报警内容");
+        titleList.add("行号");
+        titleList.add("时间");
+        titleList.add("数值");
         mTableDatas.add(titleList);
 
 
 
 
-        ArrayList<ContentBean> mRowDatas = new ArrayList<ContentBean>();
+        ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
         for (int i=0;i<20;i++){
-            ContentBean bean2 = new ContentBean();
-            bean2.setT1(i+"");
-            bean2.setT2("东方广场");
+            int num = (int) ((Math.random() * 9 + 1) * 100000);
+            CountBean bean2 = new CountBean();
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
             String t=format.format(new Date());
-            bean2.setT3(t);
-            bean2.setT4("通讯报警");
-            bean2.setT5("通讯报警");
+            bean2.setT0(i+"");
+            bean2.setT2(bean2+"m3/h");
+            bean2.setT1(t);
             mRowDatas.add(bean2);
         }
 
 
         for (int i=0;i<mRowDatas.size();i++){
             ArrayList<String> fieldList = new ArrayList<>();
+            fieldList.add(mRowDatas.get(i).getT0());
             fieldList.add(mRowDatas.get(i).getT1());
             fieldList.add(mRowDatas.get(i).getT2());
-            fieldList.add(mRowDatas.get(i).getT3());
-            fieldList.add(mRowDatas.get(i).getT4());
-            fieldList.add(mRowDatas.get(i).getT5());
             mTableDatas.add(fieldList);
         }
 
-        final LockTableView mLockTableView = new LockTableView(this, mContentView, mTableDatas);
+        final LockTableView mLockTableView = new LockTableView(this, contentView, mTableDatas);
         Log.e("表格加载开始", "当前线程：" + Thread.currentThread());
         mLockTableView.setLockFristColumn(false) //是否锁定第一列
                 .setLockFristRow(true) //是否锁定第一行
-                .setMaxColumnWidth(100) //列最大宽度
+                .setMaxColumnWidth(200) //列最大宽度
                 .setMinColumnWidth(60) //列最小宽度
 //                .setColumnWidth(1,30) //设置指定列文本宽度
 //                .setColumnWidth(0,20) //设置指定列文本宽度
-                .setColumnWidth(2,150)
-                .setColumnWidth(0,25)
+//                .setColumnWidth(1,50)
+//                .setColumnWidth(0,50)
+                .setColumnWidth(1,200)
+                .setColumnWidth(0,200)
+                .setColumnWidth(2,200)
                 .setMinRowHeight(5)//行最小高度
                 .setMaxRowHeight(3)//行最大高度
                 .setTextViewSize(13) //单元格字体大小
@@ -222,7 +255,6 @@ public class AlarmQueryActivity  extends BaseActivity{
         Log.e("表格头部固定视图(锁列)", mLockTableView.getLockHeadView().toString());
         Log.e("表格头部固定视图(不锁列)", mLockTableView.getUnLockHeadView().toString());
     }
-
     private void initDisplayOpinion() {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         DisplayUtil.density = dm.density;

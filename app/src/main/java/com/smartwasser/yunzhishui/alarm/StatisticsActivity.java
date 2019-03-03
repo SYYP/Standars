@@ -42,10 +42,10 @@ public class StatisticsActivity extends BaseActivity {
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mListView = findViewById(R.id.wraing_list);
-        button_menu.setVisibility(View.GONE);
         toolbar.setTitle("");
         tv_toolbar.setText("汇总统计");
         setSupportActionBar(toolbar);
+        button_menu.setBackgroundResource(R.drawable.fanhu);
     }
 
 
