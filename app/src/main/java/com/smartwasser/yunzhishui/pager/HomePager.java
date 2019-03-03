@@ -95,6 +95,7 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
         }
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            //
             View view= LayoutInflater.from(context).inflate(R.layout.grild_item,parent,false);
             return new MyViewHolder(view);
         }
