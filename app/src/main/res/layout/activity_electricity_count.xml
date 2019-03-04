@@ -6,224 +6,235 @@
     >
     <include layout="@layout/toolbar" android:id="@+id/lasdiueue"/>
 
-
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/base30dp"
-            android:background="#c912b7f5"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_electricity_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base50dp"
-                android:text="单位："
-                android:textSize="@dimen/base13dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base30dp"
+                    android:background="#c912b7f5"
+                    android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/ed_electricity_unit"
-                android:layout_width="@dimen/base120dp"
-                android:layout_height="@dimen/base27dp"
-                android:layout_gravity="center"
-                android:background="@drawable/editext_shape_two"
-                android:editable="false"
-                android:paddingLeft="@dimen/base5dp"
-                android:text="清河污水厂"
-                android:textColor="#4c8fd2"
-                android:drawableRight="@drawable/xiaxia"
-                android:textSize="@dimen/base12dp" />
+                    <TextView
+                        android:id="@+id/tv_electricity_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base50dp"
+                        android:text="单位："
+                        android:textSize="@dimen/base13dp" />
 
-
-            <TextView
-                android:id="@+id/tv_goujian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base200dp"
-                android:text="构建物:"
-                android:textSize="@dimen/base13dp" />
-
+                    <EditText
+                        android:id="@+id/ed_electricity_unit"
+                        android:layout_width="@dimen/base120dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:editable="false"
+                        android:paddingLeft="@dimen/base5dp"
+                        android:text="清河污水厂"
+                        android:textColor="#4c8fd2"
+                        android:drawableRight="@drawable/xiaxia"
+                        android:textSize="@dimen/base12dp" />
 
 
-                <TextView
-                    android:id="@+id/ed_electricity_goujian"
-                    android:layout_width="@dimen/base150dp"
-                    android:layout_height="@dimen/base27dp"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/base5dp"
-                    android:text="进水泵房以及栅格间"
-                    android:textColor="#4c8fd2"
-                    android:layout_gravity="center"
-                    android:background="@drawable/editext_shape_two"
-                    android:drawableRight="@drawable/xiaxia"
-                    android:textSize="@dimen/base13dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base30dp"
-            android:background="#c912b7f5"
-            android:layout_marginTop="1dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_yibiao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base24dp"
-                android:text="设备仪表："
-                android:textSize="@dimen/base13dp" />
-
-            <EditText
-                android:id="@+id/ed_electricity_yibiao"
-                android:layout_width="@dimen/base120dp"
-                android:layout_height="@dimen/base27dp"
-                android:layout_gravity="center"
-                android:background="@drawable/editext_shape_two"
-                android:editable="false"
-                android:paddingLeft="@dimen/base5dp"
-                android:text="仪表"
-                android:textColor="#4c8fd2"
-                android:drawableRight="@drawable/xiaxia"
-                android:textSize="@dimen/base12dp" />
-
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base213dp"
-                android:text="名称:"
-                android:textSize="@dimen/base13dp" />
+                    <TextView
+                        android:id="@+id/tv_goujian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base200dp"
+                        android:text="构建物:"
+                        android:textSize="@dimen/base13dp" />
 
 
 
-            <TextView
-                android:id="@+id/ed_electricity_name"
-                android:layout_width="@dimen/base150dp"
-                android:layout_height="@dimen/base27dp"
-                android:gravity="center"
-                android:paddingLeft="@dimen/base5dp"
-                android:text="jinshui_FUI进水统计量"
-                android:textColor="#4c8fd2"
-                android:layout_gravity="center"
-                android:background="@drawable/editext_shape_two"
-                android:drawableRight="@drawable/xiaxia"
-                android:textSize="@dimen/base13dp" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/ed_electricity_goujian"
+                        android:layout_width="@dimen/base150dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/base5dp"
+                        android:text="进水泵房以及栅格间"
+                        android:textColor="#4c8fd2"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:drawableRight="@drawable/xiaxia"
+                        android:textSize="@dimen/base13dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base30dp"
+                    android:background="#c912b7f5"
+                    android:layout_marginTop="1dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_yibiao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base24dp"
+                        android:text="设备仪表："
+                        android:textSize="@dimen/base13dp" />
+
+                    <EditText
+                        android:id="@+id/ed_electricity_yibiao"
+                        android:layout_width="@dimen/base120dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:editable="false"
+                        android:paddingLeft="@dimen/base5dp"
+                        android:text="仪表"
+                        android:textColor="#4c8fd2"
+                        android:drawableRight="@drawable/xiaxia"
+                        android:textSize="@dimen/base12dp" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/base30dp"
-        android:background="#c912b7f5"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/base24dp"
-            android:text="取值类型："
-            android:textSize="@dimen/base13dp" />
-
-        <EditText
-            android:id="@+id/ed_electricity_type"
-            android:layout_width="@dimen/base120dp"
-            android:layout_height="@dimen/base27dp"
-            android:layout_gravity="center"
-            android:background="@drawable/editext_shape_two"
-            android:editable="false"
-            android:paddingLeft="@dimen/base5dp"
-            android:text="瞬取值"
-            android:textColor="#4c8fd2"
-            android:drawableRight="@drawable/xiaxia"
-            android:textSize="@dimen/base12dp" />
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base213dp"
+                        android:text="名称:"
+                        android:textSize="@dimen/base13dp" />
 
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="时间:"
-            android:textSize="@dimen/base13dp"
-            android:textColor="#101010"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/base150dp"
-            />
-        <LinearLayout
-            android:layout_width="@dimen/base130dp"
-            android:layout_gravity="center"
-            android:background="@drawable/editext_shape_two"
-            android:layout_height="@dimen/base27dp">
-            <EditText
-                android:id="@+id/ed_electricity_strattime"
-                android:layout_width="@dimen/base100dp"
-                android:textColor="#4c8fd2"
-                android:layout_height="@dimen/base27dp"
-                android:editable="false"
-                android:background="@null"
-                android:layout_gravity="center"
-                android:textSize="@dimen/base15dp"
-                />
-            <ImageButton
-                android:id="@+id/but_electricity_strattime"
-                style="@style/Ibutton"
-                android:layout_gravity="center"
-                />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tv_time2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="至"
-            android:textSize="@dimen/base13dp"
-            android:textColor="#101010"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/base13dp"
-            />
-        <LinearLayout
-            android:layout_width="@dimen/base130dp"
-            android:background="@drawable/editext_shape_two"
-            android:layout_marginLeft="@dimen/base10dp"
-            android:layout_gravity="center"
-            android:layout_height="@dimen/base27dp">
-            <EditText
-                android:id="@+id/ed_electricity_endtime"
-                android:layout_width="@dimen/base100dp"
-                android:textColor="#4c8fd2"
-                android:layout_height="@dimen/base27dp"
-                android:editable="false"
-                android:background="@null"
-                android:layout_gravity="center"
-                android:textSize="@dimen/base15dp"
-                />
-            <ImageButton
-                android:id="@+id/but_electricity_endtime"
-                style="@style/Ibutton"
-                android:layout_gravity="center"
-                />
-    </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/electricity_contentView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/ed_electricity_name"
+                        android:layout_width="@dimen/base150dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/base5dp"
+                        android:text="jinshui_FUI进水统计量"
+                        android:textColor="#4c8fd2"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:drawableRight="@drawable/xiaxia"
+                        android:textSize="@dimen/base13dp" />
+                </LinearLayout>
 
 
-    <WebView
-        android:layout_marginTop="50dp"
-        android:id="@+id/electricity_wb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ></WebView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base30dp"
+                    android:background="#c912b7f5"
+                    android:layout_marginTop="1dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base24dp"
+                        android:text="取值类型："
+                        android:textSize="@dimen/base13dp" />
+
+                    <EditText
+                        android:id="@+id/ed_electricity_type"
+                        android:layout_width="@dimen/base120dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:editable="false"
+                        android:paddingLeft="@dimen/base5dp"
+                        android:text="瞬取值"
+                        android:textColor="#4c8fd2"
+                        android:drawableRight="@drawable/xiaxia"
+                        android:textSize="@dimen/base12dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="时间:"
+                        android:textSize="@dimen/base13dp"
+                        android:textColor="#101010"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base150dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="@dimen/base130dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editext_shape_two"
+                        android:layout_height="@dimen/base27dp">
+                        <EditText
+                            android:id="@+id/ed_electricity_strattime"
+                            android:layout_width="@dimen/base100dp"
+                            android:textColor="#4c8fd2"
+                            android:layout_height="@dimen/base27dp"
+                            android:editable="false"
+                            android:background="@null"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/base15dp"
+                            />
+                        <ImageButton
+                            android:id="@+id/but_electricity_strattime"
+                            style="@style/Ibutton"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_time2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="至"
+                        android:textSize="@dimen/base13dp"
+                        android:textColor="#101010"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/base13dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="@dimen/base130dp"
+                        android:background="@drawable/editext_shape_two"
+                        android:layout_marginLeft="@dimen/base10dp"
+                        android:layout_gravity="center"
+                        android:layout_height="@dimen/base27dp">
+                        <EditText
+                            android:id="@+id/ed_electricity_endtime"
+                            android:layout_width="@dimen/base100dp"
+                            android:textColor="#4c8fd2"
+                            android:layout_height="@dimen/base27dp"
+                            android:editable="false"
+                            android:background="@null"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/base15dp"
+                            />
+                        <ImageButton
+                            android:id="@+id/but_electricity_endtime"
+                            style="@style/Ibutton"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/electricity_contentView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+
+
+                <WebView
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/electricity_wb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    ></WebView>
+            </LinearLayout>
+        </HorizontalScrollView>
+
 </LinearLayout>

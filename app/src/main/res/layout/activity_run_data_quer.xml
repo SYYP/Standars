@@ -6,7 +6,15 @@
     >
     <include layout="@layout/toolbar" android:id="@+id/lasdiueue"/>
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/base30dp"
@@ -225,4 +233,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         ></WebView>
+        </LinearLayout>
+    </HorizontalScrollView>
 </LinearLayout>
