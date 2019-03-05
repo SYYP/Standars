@@ -162,8 +162,8 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
                                 break;
                             case 6:
                                 /**采购*/
-                                Intent intent6=new Intent(context,PurchaseActivity.class);
-                                context.startActivity(intent6);
+//                                Intent intent6=new Intent(context,PurchaseActivity.class);
+//                                context.startActivity(intent6);
                                 break;
                         }
                     }
