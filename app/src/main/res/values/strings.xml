@@ -15,4 +15,5 @@
     <string name="bzyxzt">泵站运行状态</string>
     <string name="ysl">抽升量m²/s</string>
     <string name="yl">雨量mm</string>
+    <string name="jclb">监测列表</string>
 </resources>

@@ -3,6 +3,8 @@ package com.smartwasser.yunzhishui.utils;
  * Created by huangmengjie on 2016/4/27 0027.
  */
 public class ConstantsYunZhiShui {
+      /**新接口**/
+       public static final String HTTP_URL="http://ghce.5166.info:9180/bzjc/";
                 /**数据填报系统*/
       public static final String URL_SERVER ="http://www.yunzhishui.com/scsj/appsso/";
        /**登录页请求*/

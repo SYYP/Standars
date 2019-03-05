@@ -15,23 +15,16 @@
         android:layout_below="@id/incl"></com.baidu.mapapi.map.MapView>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/liner_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-    >
+        android:visibility="gone">
 
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+        <LinearLayout style="@style/linerlayout">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/linerlayout"
                 android:background="@color/light_gray2"
                 android:orientation="vertical">
 
@@ -41,12 +34,11 @@
                     android:background="@color/beijin">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        style="@style/text_view"
                         android:layout_marginLeft="@dimen/base2dp"
                         android:text="@string/jc_title"
                         android:textSize="16sp" />
+
                     <ImageView
                         android:id="@+id/img_pause"
                         android:layout_width="wrap_content"
@@ -61,18 +53,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_gray2"
-                  >
+                    android:background="@color/light_gray2">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                    <LinearLayout style="@style/linerlayout">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            style="@style/text_view"
                             android:layout_marginLeft="@dimen/base42dp"
                             android:padding="5dp"
                             android:text="@string/jcdmc"
@@ -90,31 +76,19 @@
                         android:padding="5dp"
                         android:textColor="@color/light_yellow2"
                         android:textSize="14sp" />
-
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@color/light_yellow2"></View>
+                <include layout="@layout/include_view"></include>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_gray2"
-                 >
+                    android:background="@color/light_gray2">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                    <LinearLayout style="@style/linerlayout">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            style="@style/text_view"
                             android:layout_marginLeft="@dimen/base42dp"
                             android:padding="5dp"
                             android:text="@string/cbzb"
@@ -133,42 +107,28 @@
                         android:textColor="@color/light_yellow2"
                         android:textSize="14sp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                    <LinearLayout style="@style/linerlayout">
 
                         <Button
-                            android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/base30dp"
                             android:background="@drawable/login_loginbutton_pressed"
-                            android:text="查看趋势" />
+                            android:text="查看趋势"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/light_yellow2"></View>
+                <include layout="@layout/include_view"></include>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  >
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                    <LinearLayout style="@style/linerlayout">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            style="@style/text_view"
                             android:layout_marginLeft="@dimen/base42dp"
                             android:padding="5dp"
                             android:text="@string/sypah"
@@ -188,27 +148,17 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/light_yellow2"></View>
+                <include layout="@layout/include_view"></include>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="2dp">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                    <LinearLayout style="@style/linerlayout">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            style="@style/text_view"
                             android:layout_marginLeft="@dimen/base42dp"
                             android:padding="5dp"
                             android:text="@string/syxqx"
@@ -228,55 +178,48 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/light_yellow2"></View>
+                <include layout="@layout/include_view"></include>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/base50dp"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginRight="@dimen/base100dp"
                     android:layout_marginTop="13dp">
 
                     <Button
-                        android:textSize="14sp"
                         android:id="@+id/btn_ckyhx"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/base20dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_loginbutton_pressed"
-                        android:text="@string/ckpshxx" />
+                        android:text="@string/ckpshxx"
+                        android:textSize="14sp" />
 
                     <Button
-                        android:textSize="14sp"
                         android:id="@+id/btn_ckqbsj"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/base30dp"
                         android:layout_weight="1"
                         android:background="@drawable/login_loginbutton_pressed"
-                        android:text="@string/ckqbjcsj" />
+                        android:text="@string/ckqbjcsj"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/base20dp"
                     android:background="@color/beijin">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        style="@style/text_view"
                         android:layout_marginLeft="@dimen/base2dp"
                         android:padding="8dp"
                         android:text="@string/jc_title"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:visibility="invisible" />
 
                     <ImageView
@@ -305,16 +248,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.8"></LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            <LinearLayout style="@style/linerlayout">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="@dimen/base30dp"
+                    android:layout_marginRight="@dimen/base30dp"
                     android:background="@drawable/map_pressed"
                     android:orientation="vertical">
 

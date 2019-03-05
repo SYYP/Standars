@@ -1,7 +1,6 @@
 package com.smartwasser.yunzhishui.Activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -16,8 +15,6 @@ import android.widget.TextView;
 
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.adapter.alarm.Tadapter;
-import com.smartwasser.yunzhishui.alarm.AlarmQueryActivity;
-import com.smartwasser.yunzhishui.datatable.WringTableActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +28,8 @@ public class RealMonitorActivity extends BaseActivity {
     private ListView mListView;
     private List<String> mlist;
     private Toolbar toolbar;
-    private ImageButton button_menu;
-    private TextView tv_toolbar;
+    private ImageButton mButtonMenu;
+    private TextView mTvToolbar;
 
     /**
      * 需要进行检测的权限数组
@@ -53,22 +50,26 @@ public class RealMonitorActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        button_menu = (ImageButton) findViewById(R.id.button_menu);
-        tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
+        mButtonMenu = (ImageButton) findViewById(R.id.button_menu);
+        mTvToolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mListView = findViewById(R.id.wraing_list);
-        button_menu.setVisibility(View.VISIBLE);
-        button_menu.setBackgroundResource(R.drawable.fanhu);
+        mButtonMenu.setVisibility(View.VISIBLE);
+        mButtonMenu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("监测列表");
+        mTvToolbar.setText(getResources().getString(R.string.jclb));
         setSupportActionBar(toolbar);
-        button_menu.setOnClickListener(new View.OnClickListener() {
+        mButtonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
         // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
+        getVersionCode();
+    }
+
+    private void getVersionCode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             // 检查该权限是否已经获取
@@ -128,7 +129,7 @@ public class RealMonitorActivity extends BaseActivity {
             }
         });
 
-        button_menu.setOnClickListener(new View.OnClickListener() {
+        mButtonMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
