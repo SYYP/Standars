@@ -31,11 +31,12 @@
 
             <EditText
                 android:id="@+id/ed_water_unit"
-                android:layout_width="@dimen/base120dp"
+                android:layout_width="@dimen/base150dp"
                 android:layout_height="@dimen/base27dp"
                 android:layout_gravity="center"
                 android:background="@drawable/editext_shape_two"
                 android:editable="false"
+                android:gravity="center"
                 android:paddingLeft="@dimen/base5dp"
                 android:text="清河污水厂"
                 android:textColor="#4c8fd2"
@@ -48,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base200dp"
+                android:layout_marginLeft="@dimen/base100dp"
                 android:text="构建物:"
                 android:textSize="@dimen/base13dp" />
 
@@ -80,18 +81,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base24dp"
-                android:text="设备仪表："
+                android:layout_marginLeft="@dimen/base50dp"
+                android:text="仪表："
                 android:textSize="@dimen/base13dp" />
 
             <EditText
                 android:id="@+id/ed_water_yibiao"
-                android:layout_width="@dimen/base120dp"
+                android:layout_width="@dimen/base150dp"
                 android:layout_height="@dimen/base27dp"
                 android:layout_gravity="center"
                 android:background="@drawable/editext_shape_two"
                 android:editable="false"
                 android:paddingLeft="@dimen/base5dp"
+                android:gravity="center"
                 android:text="仪表"
                 android:textColor="#4c8fd2"
                 android:drawableRight="@drawable/xiaxia"
@@ -103,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/base213dp"
+                android:layout_marginLeft="@dimen/base113dp"
                 android:text="名称:"
                 android:textSize="@dimen/base13dp" />
 
@@ -142,13 +144,14 @@
 
         <EditText
             android:id="@+id/ed_water_type"
-            android:layout_width="@dimen/base120dp"
+            android:layout_width="@dimen/base150dp"
             android:layout_height="@dimen/base27dp"
             android:layout_gravity="center"
             android:background="@drawable/editext_shape_two"
             android:editable="false"
             android:paddingLeft="@dimen/base5dp"
             android:text="瞬取值"
+            android:gravity="center"
             android:textColor="#4c8fd2"
             android:drawableRight="@drawable/xiaxia"
             android:textSize="@dimen/base12dp" />
@@ -162,7 +165,7 @@
             android:textSize="@dimen/base13dp"
             android:textColor="#101010"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/base150dp"
+            android:layout_marginLeft="@dimen/base80dp"
             />
         <LinearLayout
             android:layout_width="@dimen/base130dp"
@@ -173,6 +176,7 @@
                 android:id="@+id/ed_water_strattime"
                 android:layout_width="@dimen/base100dp"
                 android:textColor="#4c8fd2"
+                android:gravity="center"
                 android:layout_height="@dimen/base27dp"
                 android:editable="false"
                 android:background="@null"
@@ -207,6 +211,7 @@
                 android:textColor="#4c8fd2"
                 android:layout_height="@dimen/base27dp"
                 android:editable="false"
+                android:gravity="center"
                 android:background="@null"
                 android:layout_gravity="center"
                 android:textSize="@dimen/base15dp"

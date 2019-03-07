@@ -1,11 +1,14 @@
 package com.smartwasser.yunzhishui.statistics;
 
+import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.rmondjone.locktableview.DisplayUtil;
 import com.rmondjone.locktableview.LockTableView;
 import com.rmondjone.xrecyclerview.ProgressStyle;
@@ -21,20 +25,28 @@ import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
+import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
+import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.net.HttpLoader;
 import com.smartwasser.yunzhishui.productionactivity.ContractActivity;
+import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
+import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
 import com.smartwasser.yunzhishui.utils.ListViewUtils;
+import com.smartwasser.yunzhishui.utils.PopListViewUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
+import com.smartwasser.yunzhishui.utils.TimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by 15810 on 2019/2/26.
  */
 
-public class ContInflowActivity extends BaseActivity {
+public class ContInflowActivity extends BaseActivity implements View.OnClickListener, HttpLoader.ResponseListener{
     private List<String> mlist;
     private ListView minitListView;
     private EditText mTvShuiChang;
@@ -44,6 +56,17 @@ public class ContInflowActivity extends BaseActivity {
     private TextView tv_toolbar;
     private TextView mRightTitle;
     private WebView mWdebView;
+
+
+    private ListView minitListView5;
+    private TimeUtils time = new TimeUtils();
+    private MyBusinesAdapter myBusinesAdapter;
+    private String code = "";
+    private EditText tv_shui_chang_edit;
+    private EditText ed_count_strattime;
+    private DialogTimeUtils dialog=new DialogTimeUtils(this);
+    private PopListViewUtils plu=new PopListViewUtils(this);
+    private BusinessUnitResponse mBusinessUnit;
     @Override
     protected int initContentView() {
         return R.layout.activity_count_inflow;
@@ -67,7 +90,10 @@ public class ContInflowActivity extends BaseActivity {
         mWdebView.loadUrl("file:///android_asset/myechart.html");
 
 
-
+        tv_shui_chang_edit = findViewById(R.id.tv_shui_chang_edit);
+        ed_count_strattime = findViewById(R.id.ed_count_strattime);
+        tv_shui_chang_edit.setOnClickListener(this);
+        ed_count_strattime.setOnClickListener(this);
 
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
@@ -205,8 +231,8 @@ public class ContInflowActivity extends BaseActivity {
                 .setMinColumnWidth(60) //列最小宽度
 //                .setColumnWidth(1,30) //设置指定列文本宽度
 //                .setColumnWidth(0,20) //设置指定列文本宽度
-                .setColumnWidth(1,50)
-                .setColumnWidth(0,50)
+                .setColumnWidth(1, 100)
+                .setColumnWidth(0, 50)
                 .setMinRowHeight(5)//行最小高度
                 .setMaxRowHeight(3)//行最大高度
                 .setTextViewSize(13) //单元格字体大小
@@ -328,5 +354,101 @@ public class ContInflowActivity extends BaseActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_shui_chang_edit:
+                minitListView5 = initListView5();
+                break;
+            case R.id.ed_count_strattime:
+                /**开始时间*/
+                dialog.show(ed_count_strattime);
+                dialog.showTime();
+                break;
+        }
+    }
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
+                && response instanceof BusinessUnitResponse) {
+            mBusinessUnit = (BusinessUnitResponse) response;
+            if ("00000".equals(mBusinessUnit.getErrorCode())) {
+                myBusinesAdapter = new MyBusinesAdapter();
+                minitListView5.setAdapter(myBusinesAdapter);
+                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        tv_shui_chang_edit.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+
+    }
+
+
+    /*条目的适配器*/
+    class MyBusinesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mBusinessUnit.getData().getComboboxList().size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(ContInflowActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+
+    class ViewHolder {
+        TextView v_listview_item_number;
+    }
+
+
+    private ListView initListView5() {
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,
+                BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
+        return mListViews;
     }
 }

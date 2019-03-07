@@ -1,16 +1,25 @@
 package com.smartwasser.yunzhishui.record;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.rmondjone.locktableview.DisplayUtil;
 import com.rmondjone.locktableview.LockTableView;
 import com.rmondjone.xrecyclerview.ProgressStyle;
@@ -18,17 +27,36 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
+import com.smartwasser.yunzhishui.bean.BuildingResponse;
+import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
+import com.smartwasser.yunzhishui.bean.EventNormSelect;
+import com.smartwasser.yunzhishui.bean.QuotaResponse;
+import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonSelectResponse;
+import com.smartwasser.yunzhishui.net.HttpLoader;
+import com.smartwasser.yunzhishui.rmonactivity.RmonStateActivity;
+import com.smartwasser.yunzhishui.rmonactivity.SelectResultActivity;
+import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
+import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
+import com.smartwasser.yunzhishui.utils.PopListViewUtils;
+import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
+import com.smartwasser.yunzhishui.utils.TimeUtils;
+
+import org.seny.android.utils.MyToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by 15810 on 2019/3/1.
  */
 
-public class FacilityStateActivity extends BaseActivity {
+public class FacilityStateActivity extends BaseActivity implements View.OnClickListener,HttpLoader.ResponseListener{
     private List<String> mlist;
     private ListView minitListView;
     private LinearLayout contentView;
@@ -37,6 +65,30 @@ public class FacilityStateActivity extends BaseActivity {
     private TextView tv_toolbar;
     private TextView mRightTitle;
     private WebView mWdebView;
+
+    private TimeUtils time=new TimeUtils();
+    private BusinessUnitResponse mBusinessUnit;
+    private MyBusinesAdapter myBusinesAdapter;
+    private String code="";
+    private BuildingResponse mBuilding;
+    private  MyBuildingAdapter myBuildingAdapter;
+    private String buildCode="";
+    private QuotaResponse mQuota;
+    private MyQuotaAdapter myQuotaAdapter;
+    private String indeCode="";
+    private ListView minitListView2,
+            minitListView5,minitListView6,minitListView7;
+    private DialogTimeUtils dialog=new DialogTimeUtils(this);
+    private PopListViewUtils plu=new PopListViewUtils(this);
+    private EventNormSelect event=new EventNormSelect();
+    private EditText ed_facility_unit;
+    private EditText ed_facility_goujian;
+    private EditText ed_facility_yibiao;
+    private EditText ed_facility_type;
+    private EditText ed_facility_strattime;
+    private EditText ed_facility_endtime;
+    private Button ed_facility_btn;
+
     @Override
     protected int initContentView() {
         return R.layout.activity_facility_state;
@@ -56,6 +108,23 @@ public class FacilityStateActivity extends BaseActivity {
         //开启脚本支持
         mWdebView.getSettings().setJavaScriptEnabled(true);
         mWdebView.loadUrl("file:///android_asset/myechart_type3.html");
+
+        ed_facility_unit = findViewById(R.id.ed_facility_unit);
+        ed_facility_goujian = findViewById(R.id.ed_facility_goujian);
+        ed_facility_yibiao = findViewById(R.id.ed_facility_yibiao);
+        ed_facility_type = findViewById(R.id.ed_facility_type);
+        ed_facility_strattime = findViewById(R.id.ed_facility_strattime);
+        ed_facility_endtime = findViewById(R.id.ed_facility_endtime);
+        ed_facility_btn = findViewById(R.id.ed_facility_btn);
+
+        ed_facility_unit.setOnClickListener(this);
+        ed_facility_goujian.setOnClickListener(this);
+        ed_facility_yibiao.setOnClickListener(this);
+        ed_facility_type.setOnClickListener(this);
+        ed_facility_strattime.setOnClickListener(this);
+        ed_facility_endtime.setOnClickListener(this);
+        ed_facility_btn.setOnClickListener(this);
+
     }
 
     @Override
@@ -63,14 +132,6 @@ public class FacilityStateActivity extends BaseActivity {
         initDisplayOpinion();
 
         initAdapter();
-
-
-        button_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
 
         mRightTitle.setOnClickListener(new View.OnClickListener() {
@@ -147,9 +208,8 @@ public class FacilityStateActivity extends BaseActivity {
 //                .setColumnWidth(0,20) //设置指定列文本宽度
 //                .setColumnWidth(1,50)
 //                .setColumnWidth(0,50)
-                .setColumnWidth(1,200)
-                .setColumnWidth(0,200)
-                .setColumnWidth(2,200)
+                .setColumnWidth(1, 100)
+                .setColumnWidth(0, 50)
                 .setMinRowHeight(5)//行最小高度
                 .setMaxRowHeight(3)//行最大高度
                 .setTextViewSize(13) //单元格字体大小
@@ -263,5 +323,331 @@ public class FacilityStateActivity extends BaseActivity {
         DisplayUtil.screenhightPx = dm.heightPixels;
         DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
+    }
+
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
+                && response instanceof BusinessUnitResponse) {
+            mBusinessUnit= (BusinessUnitResponse) response;
+            if ("00000".equals( mBusinessUnit.getErrorCode())) {
+                myBusinesAdapter = new MyBusinesAdapter();
+                minitListView5.setAdapter(myBusinesAdapter);
+                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_facility_unit.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING
+                && response instanceof BuildingResponse) {
+            mBuilding = (BuildingResponse) response;
+            if ("00000".equals(mBuilding.getErrorCode())) {
+                myBuildingAdapter = new MyBuildingAdapter();
+                minitListView6.setAdapter( myBuildingAdapter);
+                minitListView6.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_facility_goujian.setText(mBuilding.getData().getComboboxList().get(position).getText());
+                        buildCode = mBuilding.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA
+                && response instanceof QuotaResponse) {
+            mQuota = (QuotaResponse) response;
+            if ("00000".equals(mQuota.getErrorCode())) {
+                myQuotaAdapter = new MyQuotaAdapter();
+                minitListView7.setAdapter( myQuotaAdapter);
+                minitListView7.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_facility_yibiao.setText( mQuota.getData().getComboboxList().get(position).getText());
+                        indeCode = mQuota.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCRMONSELECT
+                && response instanceof RmonSelectResponse) {
+            RmonSelectResponse  mQuota = (RmonSelectResponse) response;
+            Log.i("00000",mQuota.getErrorCode());
+            if("00014".equals(mQuota.getErrorCode())){
+                Toast.makeText(FacilityStateActivity.this, "此时间段没有数据", Toast.LENGTH_SHORT).show();
+            }
+            if("00000".equals( mQuota.getErrorCode())){
+                String sb=ed_facility_yibiao.getText().toString();
+                event.setRmon(mQuota);
+                event.setUserName(sb);
+                EventBus.getDefault().postSticky(event);
+                Intent intent=new Intent(FacilityStateActivity.this,SelectResultActivity.class);
+                startActivity(intent);
+            }
+            dismissProgressDialog();
+        }
+    }
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+        MyToast.show(this, "error: " + error.getMessage());
+    }
+    private ListView initListView7(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("businessCode",code);
+        prams.put("buildCode",buildCode);
+        prams.put("dataType2","D1");
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
+                QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
+        return mListViews;
+    }
+    private ListView initListView6(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("businessCode", code);
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUILDING, prams,
+                BuildingResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING, this, false).setTag(this);
+        return mListViews;
+    }
+    private ListView initListView5(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,
+                BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
+        return mListViews;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_fan:
+                finish();
+                break;
+            case R.id.ed_facility_unit:
+                /**单位*/
+                minitListView5 = initListView5();
+                PopupWindowUtils.showPopupWindow(minitListView5, ed_facility_unit);
+                break;
+            case R.id.ed_facility_goujian:
+                /**构筑物*/
+                String s = ed_facility_goujian.getText().toString();
+                if ("".equals(s) || "null".equals(s) || s == null) {
+                    Toast.makeText(FacilityStateActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                minitListView6 = initListView6();
+                PopupWindowUtils.showPopupWindow(minitListView6, ed_facility_goujian);
+                break;
+            case R.id.ed_facility_yibiao:
+                /**指标*/
+                String s2 = ed_facility_yibiao.getText().toString();
+                if ("".equals(s2) || "null".equals(s2) || s2 == null) {
+                    Toast.makeText(FacilityStateActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String s3 = ed_facility_yibiao.getText().toString();
+                if ("".equals(s3) || "null".equals(s3) || s3 == null) {
+                    Toast.makeText(FacilityStateActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                minitListView7 = initListView7();
+                PopupWindowUtils.showPopupWindow(minitListView7, ed_facility_yibiao);
+                break;
+            case R.id.ed_facility_strattime:
+                /**开始时间*/
+                dialog.show(ed_facility_strattime);
+                dialog.showTime();
+                break;
+            case R.id.ed_facility_endtime:
+                /**结束时间*/
+                dialog.show(ed_facility_endtime);
+                dialog.showTime();
+                break;
+//            case R.id.ed_kuaijie_muchtime:
+//                /**快捷时间*/
+//                // 初始化ListView控件和里边的数据
+//                minitListView2 = plu.initListView();
+//                PopupWindowUtils.showPopupWindow(minitListView2, ed_kuaijie_muchtime);
+//                minitListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        List<String> list = time.showTimeShortcut();
+//                        if (position >= 1) {
+//                            ed_muchtrend_strattime.setText(list.get(position * 2 - 2));
+//                            ed_muchtrend_endtime.setText(list.get(position * 2 - 1));
+//                            ed_kuaijie_muchtime.setText(plu.mListView.get(position));
+//                        }
+//                        /**关闭popupwindow*/
+//                        PopupWindowUtils.closePopupWindow();
+//                    }
+//                });
+//                break;
+            case R.id.ed_facility_btn:
+                /**发起网络请求*/
+
+                String dw=ed_facility_unit.getText().toString();
+                if("".equals(dw)||dw==null||"null".equals(dw)){
+                    Toast.makeText(FacilityStateActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String gzw=ed_facility_goujian.getText().toString();
+                if("".equals(gzw)||gzw==null||"null".equals(gzw)){
+                    Toast.makeText(FacilityStateActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String sb=ed_facility_yibiao.getText().toString();
+                if("".equals(sb)||sb==null||"null".equals(sb)){
+                    Toast.makeText(FacilityStateActivity.this, "请选择设备", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String start=ed_facility_strattime.getText().toString();
+                String end=ed_facility_endtime.getText().toString();
+                if("".equals(start)||start==null||"null".equals(start)){
+                    Toast.makeText(FacilityStateActivity.this, "请选择开始时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if("".equals(end)||end==null||"null".equals(end)){
+                    Toast.makeText(FacilityStateActivity.this, "请选择结束时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                showProgressDialog();
+                HashMap<String, Object> prams = new HashMap<>();
+                prams.put("businessCode",code);
+                prams.put("buildCode",buildCode);
+                prams.put("indeCode",indeCode);
+                prams.put("dataTimeFrom",start);
+                prams.put("dataTimeTo", end);
+                HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCRMONSELECT, prams,
+                        RmonSelectResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCRMONSELECT, this, false).setTag(this);
+                showProgressDialog();
+                break;
+        }
+    }
+
+    class MyBusinesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mBusinessUnit.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(FacilityStateActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+    class  MyBuildingAdapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return mBuilding.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(FacilityStateActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBuilding.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+    class MyQuotaAdapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return mQuota.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(FacilityStateActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mQuota.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+    class ViewHolder{
+        TextView v_listview_item_number;
     }
 }

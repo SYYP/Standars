@@ -127,9 +127,8 @@ public class ElectricityCountActivity extends BaseActivity {
 //                .setColumnWidth(1,30) //设置指定列文本宽度
 //                .setColumnWidth(0,20) //设置指定列文本宽度
 //                .setColumnWidth(1,50)
-                .setColumnWidth(1,200)
-                .setColumnWidth(0,200)
-                .setColumnWidth(2,200)
+                .setColumnWidth(1, 100)
+                .setColumnWidth(0, 50)
 //                .setColumnWidth(0,50)
                 .setMinRowHeight(5)//行最小高度
                 .setMaxRowHeight(3)//行最大高度

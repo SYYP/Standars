@@ -31,12 +31,13 @@
 
             <EditText
                 android:id="@+id/ed_facility_unit"
-                android:layout_width="@dimen/base120dp"
+                android:layout_width="@dimen/base150dp"
                 android:layout_height="@dimen/base27dp"
                 android:layout_gravity="center"
                 android:background="@drawable/editext_shape_two"
                 android:editable="false"
                 android:paddingLeft="@dimen/base5dp"
+                android:gravity="center"
                 android:text="清河污水厂"
                 android:textColor="#4c8fd2"
                 android:drawableRight="@drawable/xiaxia"
@@ -54,7 +55,7 @@
 
 
 
-                <TextView
+                <EditText
                     android:id="@+id/ed_facility_goujian"
                     android:layout_width="@dimen/base150dp"
                     android:layout_height="@dimen/base27dp"
@@ -86,13 +87,14 @@
 
             <EditText
                 android:id="@+id/ed_facility_yibiao"
-                android:layout_width="@dimen/base120dp"
+                android:layout_width="@dimen/base150dp"
                 android:layout_height="@dimen/base27dp"
                 android:layout_gravity="center"
                 android:background="@drawable/editext_shape_two"
                 android:editable="false"
                 android:paddingLeft="@dimen/base5dp"
                 android:text="仪表"
+                android:gravity="center"
                 android:textColor="#4c8fd2"
                 android:drawableRight="@drawable/xiaxia"
                 android:textSize="@dimen/base12dp" />
@@ -121,6 +123,16 @@
                 android:background="@drawable/editext_shape_two"
                 android:drawableRight="@drawable/xiaxia"
                 android:textSize="@dimen/base13dp" />
+
+            <Button
+                android:layout_width="@dimen/base75dp"
+                android:textSize="@dimen/base15dp"
+                android:text="查询"
+                android:layout_gravity="center"
+                android:id="@+id/ed_facility_btn"
+                android:layout_marginLeft="@dimen/base50dp"
+                android:background="@drawable/editext_shape_two"
+                android:layout_height="@dimen/base27dp" />
         </LinearLayout>
 
 
@@ -142,7 +154,7 @@
 
         <EditText
             android:id="@+id/ed_facility_type"
-            android:layout_width="@dimen/base120dp"
+            android:layout_width="@dimen/base150dp"
             android:layout_height="@dimen/base27dp"
             android:layout_gravity="center"
             android:background="@drawable/editext_shape_two"
@@ -150,6 +162,7 @@
             android:editable="false"
             android:paddingLeft="@dimen/base5dp"
             android:text="瞬取值"
+            android:gravity="center"
             android:textColor="#4c8fd2"
             android:textSize="@dimen/base12dp" />
 
@@ -178,6 +191,7 @@
                 android:background="@null"
                 android:editable="false"
                 android:textColor="#4c8fd2"
+                android:gravity="center"
                 android:textSize="@dimen/base15dp" />
 
             <ImageButton
@@ -210,6 +224,7 @@
                 android:layout_gravity="center"
                 android:background="@null"
                 android:editable="false"
+                android:gravity="center"
                 android:textColor="#4c8fd2"
                 android:textSize="@dimen/base15dp" />
 

@@ -8,7 +8,8 @@ public class ConstantsYunZhiShui {
                 /**数据填报系统*/
       public static final String URL_SERVER ="http://www.yunzhishui.com/scsj/appsso/";
        /**登录页请求*/
-      public static final String URL_LOGIN="http://www.yunzhishui.com/portal/appsso/login/";
+      public static final String URL_LOGIN="http://ghce.5166.info:9180/bzjc/appsso/login/";
+//      public static final String URL_LOGIN="http://www.yunzhishui.com/portal/appsso/login/";
       /**登录页请求码*/
       public static final int REQUEST_CODE_LOGIN = 0;
       /**修改密码页*/
@@ -398,9 +399,11 @@ public class ConstantsYunZhiShui {
 
 
                             /**远程监控*/
-    public static final String URL_SERVERssssss="http://www.yunzhishui.com/zxjc/appsso/";
+//    public static final String URL_SERVERssssss="http://www.yunzhishui.com/zxjc/appsso/";
+    public static final String URL_SERVERssssss="http://ghce.5166.info:9180/bzjc/appsso";
+    public static final String BASE_URL = "http://ghce.5166.info:9180/bzjc/appsso";
                                /**导航*/
-    public static final String URL_ZXJCMENULIST=URL_SERVERssssss+"/dh/menuList/";
+    public static final String URL_ZXJCMENULIST=BASE_URL+"/dh/menuList/";
     public static final int REQUEST_CODE_ZXJCMENULIST=106;
                              /**清河web页*/
     public static final String URL_ZXJCMONITOR=URL_SERVERssssss+"monitor/f";

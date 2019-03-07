@@ -282,8 +282,7 @@ public class HttpLoader {
            headers.put("mobilebrand",mHeaderList.get(2));
            headers.put("appversionno","1.0");
            headers.put("sign",mHeaderList.get(3));
-           headers.put("Cookie", "SHAREJSESSIONID=" +mHeaderList.get(0));
-
+           headers.put("Cookie", "JSESSIONID=" +mHeaderList.get(0));
            headers.put("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
         return headers;
     }

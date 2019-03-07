@@ -31,7 +31,7 @@
                 />
             <EditText
                 android:id="@+id/edit_pump_name"
-                android:layout_width="@dimen/base120dp"
+                android:layout_width="@dimen/base150dp"
                 android:layout_height="@dimen/base30dp"
                 android:layout_marginLeft="@dimen/base9dp"
                 android:layout_gravity="center"
@@ -65,6 +65,7 @@
                     android:layout_height="@dimen/base27dp"
                     android:editable="false"
                     android:background="@null"
+                    android:gravity="center"
                     android:layout_gravity="center"
                     android:textSize="@dimen/base15dp"
                     />
@@ -96,6 +97,7 @@
                     android:textColor="#4c8fd2"
                     android:layout_height="@dimen/base27dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:background="@null"
                     android:layout_gravity="center"
                     android:textSize="@dimen/base15dp"
