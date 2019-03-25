@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -45,6 +46,8 @@ public class InterestCountActivity extends BaseActivity {
     private TextView mRightTitle;
     private LinearLayout mWebLinea;
     private EditText ed_interset_rdit;
+    private EditText tv_interset_endtime;
+    private Button count_shui_chang_btn;
     private DialogTimeUtils dialog = new DialogTimeUtils(this);
     @Override
     protected int initContentView() {
@@ -60,13 +63,30 @@ public class InterestCountActivity extends BaseActivity {
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebView = findViewById(R.id.chartshow_wbs);
+        count_shui_chang_btn = findViewById(R.id.count_shui_chang_btn);
         ed_interset_rdit = findViewById(R.id.ed_interset_rdit);
+        tv_interset_endtime = findViewById(R.id.tv_interset_endtime);
         ed_interset_rdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /**开始时间*/
                 dialog.show(ed_interset_rdit);
                 dialog.showTime();
+            }
+        });
+        tv_interset_endtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /**结束时间*/
+                dialog.show(tv_interset_endtime);
+                dialog.showTime();
+            }
+        });
+
+        count_shui_chang_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

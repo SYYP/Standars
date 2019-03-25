@@ -744,5 +744,9 @@ public class ConstantsYunZhiShui {
     public static interface NEWSHUIZHIYUN{
         int PAGECODE=1008;
         String PAGEBASEURL=BASE_URL+"/dh/menuList";
+
+        String BUILDCOUNT_URL=BASE_URL+"waterStat/flowStat";
+        int BUILDCOUNT_CODE=1009;
+
     }
 }

@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.rmondjone.locktableview.DisplayUtil;
@@ -51,10 +53,10 @@ public class ElectricCountActivity extends BaseActivity implements View.OnClickL
     private ListView minitListView5;
     private WebView mWdebView;
     private EditText tv_shui_chang_edit;
-    private EditText ed_count_strattime;
+    private EditText ed_count_strattime,tv_shui_endtime;
     private MyBusinesAdapter myBusinesAdapter;
     private BusinessUnitResponse mBusinessUnit;
-
+    private Button tv_shui_chang_btn;
     private String code = "";
     private DialogTimeUtils dialog = new DialogTimeUtils(this);
 
@@ -75,6 +77,11 @@ public class ElectricCountActivity extends BaseActivity implements View.OnClickL
         tv_shui_chang_edit = findViewById(R.id.tv_shui_chang_edit);
         tv_shui_chang_edit.setOnClickListener(this);
         ed_count_strattime.setOnClickListener(this);
+
+        tv_shui_chang_btn = (Button) findViewById(R.id.tv_shui_chang_btn);
+        tv_shui_chang_btn.setOnClickListener(this);
+        tv_shui_endtime = findViewById(R.id.tv_shui_endtime);
+        tv_shui_endtime.setOnClickListener(this);
         //进行webwiev的一堆设置
         //开启本地文件读取（默认为true，不设置也可以）
         mWdebView.getSettings().setAllowFileAccess(true);
@@ -299,6 +306,28 @@ public class ElectricCountActivity extends BaseActivity implements View.OnClickL
                 /**开始时间*/
                 dialog.show(ed_count_strattime);
                 dialog.showTime();
+                break;
+            case R.id.tv_shui_endtime:
+                /**结束时间*/
+                dialog.show(tv_shui_endtime);
+                dialog.showTime();
+                break;
+            case R.id.tv_shui_chang_btn:
+                String indexMenu = tv_shui_chang_edit.getText().toString();
+                String time = ed_count_strattime.getText().toString();
+
+                if (indexMenu==null){
+                    Toast.makeText(this,"厂站选择不能为空",Toast.LENGTH_LONG).show();
+                }
+                if (time==null){
+                    Toast.makeText(this,"开始时间选择不能为空",Toast.LENGTH_LONG).show();
+                }
+                String endTime = tv_shui_endtime.getText().toString();
+                if (endTime==null){
+                    Toast.makeText(this,"结束时间选择不能为空",Toast.LENGTH_LONG).show();
+                }
+
+
                 break;
         }
     }
