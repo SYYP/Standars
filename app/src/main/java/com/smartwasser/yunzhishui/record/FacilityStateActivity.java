@@ -32,9 +32,9 @@ import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.EventNormSelect;
 import com.smartwasser.yunzhishui.bean.QuotaResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
 import com.smartwasser.yunzhishui.bean.RmonSelectResponse;
 import com.smartwasser.yunzhishui.net.HttpLoader;
-import com.smartwasser.yunzhishui.rmonactivity.RmonStateActivity;
 import com.smartwasser.yunzhishui.rmonactivity.SelectResultActivity;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
@@ -76,7 +76,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
     private QuotaResponse mQuota;
     private MyQuotaAdapter myQuotaAdapter;
     private String indeCode="";
-    private ListView minitListView2,
+    private ListView minitListView2,minitListView3,
             minitListView5,minitListView6,minitListView7;
     private DialogTimeUtils dialog=new DialogTimeUtils(this);
     private PopListViewUtils plu=new PopListViewUtils(this);
@@ -88,7 +88,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
     private EditText ed_facility_strattime;
     private EditText ed_facility_endtime;
     private Button ed_facility_btn;
-
+    private EditText ed_facility_name;
     @Override
     protected int initContentView() {
         return R.layout.activity_facility_state;
@@ -113,6 +113,8 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
         ed_facility_goujian = findViewById(R.id.ed_facility_goujian);
         ed_facility_yibiao = findViewById(R.id.ed_facility_yibiao);
         ed_facility_type = findViewById(R.id.ed_facility_type);
+        ed_facility_name = findViewById(R.id.ed_facility_name);
+
         ed_facility_strattime = findViewById(R.id.ed_facility_strattime);
         ed_facility_endtime = findViewById(R.id.ed_facility_endtime);
         ed_facility_btn = findViewById(R.id.ed_facility_btn);
@@ -124,6 +126,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
         ed_facility_strattime.setOnClickListener(this);
         ed_facility_endtime.setOnClickListener(this);
         ed_facility_btn.setOnClickListener(this);
+        ed_facility_name.setOnClickListener(this);
 
     }
 
@@ -158,7 +161,8 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("设备状态查询");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("曲线");
     }
@@ -380,7 +384,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
         }
         if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCRMONSELECT
                 && response instanceof RmonSelectResponse) {
-            RmonSelectResponse  mQuota = (RmonSelectResponse) response;
+            RmonSelectResponse mQuota = (RmonSelectResponse) response;
             Log.i("00000",mQuota.getErrorCode());
             if("00014".equals(mQuota.getErrorCode())){
                 Toast.makeText(FacilityStateActivity.this, "此时间段没有数据", Toast.LENGTH_SHORT).show();
@@ -476,6 +480,42 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
                 }
                 minitListView7 = initListView7();
                 PopupWindowUtils.showPopupWindow(minitListView7, ed_facility_yibiao);
+                break;
+            case R.id.ed_facility_name:
+                minitListView2= plu.initListView8();
+                PopupWindowUtils.showPopupWindow(minitListView2,ed_facility_name);
+                minitListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_facility_name.setText(plu.mListView8.get(position));
+                        if("精细查询".equals( ed_facility_name.getText().toString())){
+//                            image_shunshi.setVisibility(View.GONE);
+//                            ed_shunshi.setVisibility(View.GONE);
+                        }else{
+//                            image_shunshi.setVisibility(View.VISIBLE);
+//                            ed_shunshi.setVisibility(View.VISIBLE);
+                        }
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+                break;
+            case R.id.ed_facility_type:
+                minitListView3= plu.initListView9();
+                PopupWindowUtils.showPopupWindow(minitListView3, ed_facility_type);
+                minitListView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_facility_type.setText(plu.mListView9.get(position));
+                        if("精细查询".equals( ed_facility_type.getText().toString())){
+//                            image_shunshi.setVisibility(View.GONE);
+//                            ed_shunshi.setVisibility(View.GONE);
+                        }else{
+//                            image_shunshi.setVisibility(View.VISIBLE);
+//                            ed_shunshi.setVisibility(View.VISIBLE);
+                        }
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
                 break;
             case R.id.ed_facility_strattime:
                 /**开始时间*/

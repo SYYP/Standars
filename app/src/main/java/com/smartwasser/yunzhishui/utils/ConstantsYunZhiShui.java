@@ -661,7 +661,7 @@ public class ConstantsYunZhiShui {
     /**
      * 清河web页
      */
-    public static final String URL_ZXJCMONITOR = URL_SERVERssssss + "monitor/f";
+    public static final String URL_ZXJCMONITOR = URL_SERVERssssss;
     /**
      * 单位
      */
@@ -740,4 +740,9 @@ public class ConstantsYunZhiShui {
      */
     public static final String URL_ONLINEACHIE = URL_SERVERsssssss + "/supplier/findSupplierScoreInfo/";
     public static final int REQUEST_CODE_ONLINEACHIE = 121;
+
+    public static interface NEWSHUIZHIYUN{
+        int PAGECODE=1008;
+        String PAGEBASEURL=BASE_URL+"/dh/menuList";
+    }
 }

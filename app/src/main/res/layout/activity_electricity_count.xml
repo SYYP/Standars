@@ -56,7 +56,7 @@
 
 
 
-                    <TextView
+                    <EditText
                         android:id="@+id/ed_electricity_goujian"
                         android:layout_width="@dimen/base150dp"
                         android:layout_height="@dimen/base27dp"
@@ -106,24 +106,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/base213dp"
-                        android:text="名称:"
+                        android:layout_marginLeft="@dimen/base200dp"
+                        android:text="查询模式:"
                         android:textSize="@dimen/base13dp" />
 
 
 
-                    <TextView
+                    <EditText
                         android:id="@+id/ed_electricity_name"
-                        android:layout_width="@dimen/base150dp"
+                        android:layout_width="@dimen/base135dp"
                         android:layout_height="@dimen/base27dp"
                         android:gravity="center"
                         android:paddingLeft="@dimen/base5dp"
-                        android:text="jinshui_FUI进水统计量"
+                        android:text="请选择"
                         android:textColor="#4c8fd2"
                         android:layout_gravity="center"
                         android:background="@drawable/editext_shape_two"
                         android:drawableRight="@drawable/xiaxia"
                         android:textSize="@dimen/base13dp" />
+
+                    <Button
+                        android:layout_width="@dimen/base70dp"
+                        android:layout_height="@dimen/base27dp"
+                        android:background="@drawable/editext_shape_two"
+                        android:text="查询"
+                        android:layout_marginLeft="@dimen/base30dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/electricity_data_btn"
+                        android:textSize="@dimen/base15dp"
+                        />
                 </LinearLayout>
 
 

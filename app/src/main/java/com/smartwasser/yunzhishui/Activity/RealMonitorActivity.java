@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.adapter.alarm.Tadapter;
+import com.smartwasser.yunzhishui.adapter.alarm.TadapterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +144,7 @@ public class RealMonitorActivity extends BaseActivity {
         mlist = new ArrayList<>();
         mlist.add("泵站实时监测");
         mlist.add("监测点实时监测");
-        Tadapter tadapter = new Tadapter(this, mlist);
+        TadapterItem tadapter = new TadapterItem(this, mlist);
         mListView.setAdapter(tadapter);
 
 

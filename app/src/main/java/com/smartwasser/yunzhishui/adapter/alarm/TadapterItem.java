@@ -15,15 +15,15 @@ import java.util.List;
  * Created by 15810 on 2019/2/22.
  */
 
-public class Tadapter  extends BaseAdapter{
+public class TadapterItem extends BaseAdapter{
     private Context mContent;
 
-    public Tadapter(Context mContent, List<RmonMenuResponse.DataBean> mList) {
+    public TadapterItem(Context mContent, List<String> mList) {
         this.mContent = mContent;
         this.mList = mList;
     }
 
-    private List<RmonMenuResponse.DataBean> mList;
+    private List<String> mList;
     @Override
     public int getCount() {
         return mList!=null?mList.size():0;
@@ -50,7 +50,7 @@ public class Tadapter  extends BaseAdapter{
         }else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.tv.setText(mList.get(i).getFuncnamech());
+        viewHolder.tv.setText(mList.get(i));
         return view;
     }
     class ViewHolder{

@@ -37,13 +37,14 @@ public class RmonRealTimeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+        /**注册一个EventBus*/
+        EventBus.getDefault().registerSticky(this);
         webview= (WebView)findViewById(R.id.webview);
         menu= (ImageButton) findViewById(R.id.button_menu);
         tv_toolbar= (TextView) findViewById(R.id.tv_toolbar);
         menu.setBackgroundResource(R.drawable.fanhu);
-        tv_toolbar.setText("第一污水处理厂");
-        /**注册一个EventBus*/
-        EventBus.getDefault().registerSticky(this);
+        tv_toolbar.setText(ese.getContractunitName());
+
         initData();
     }
     private void initData() {
@@ -55,14 +56,14 @@ public class RmonRealTimeActivity extends AppCompatActivity {
         linearParams.width = width;
         /**将屏幕宽高设置给webView*/
         map = HttpLoader.generateHeaders();
-        removeCookie();
-        syncCookie(ConstantsYunZhiShui.URL_ZXJCMONITOR + "?" + "bu=" + "CZWS0620", map.get("Cookie"));
+
 
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setDomStorageEnabled(true);
         webview.setLayoutParams(linearParams);
-
-        webview.loadUrl(ConstantsYunZhiShui.URL_ZXJCMONITOR + "?" + "bu=" + "CZWS0620", map);
+        removeCookie();
+        syncCookie(ConstantsYunZhiShui.URL_ZXJCMONITOR + "/" + ese.getAddId(), map.get("Cookie"));
+        webview.loadUrl(ConstantsYunZhiShui.URL_ZXJCMONITOR + "/" +ese.getAddId(), map);
 
         Log.d("Uri", webview.getUrl());
         webview.setWebChromeClient(new WebChromeClient() {
@@ -100,12 +101,12 @@ public class RmonRealTimeActivity extends AppCompatActivity {
      * @return true 同步cookie成功，false同步cookie失败
      * @Author JPH
      */
-     public static boolean syncCookie(String url,String cookie) {
+    public static boolean syncCookie(String url,String cookie) {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setCookie(url,cookie);//如果没有特殊需求，这里只需要将session id以"key=value"形式作为cookie即可
         String newCookie = cookieManager.getCookie(url);
         return TextUtils.isEmpty(newCookie)?false:true;
-      }
+    }
     private void removeCookie() {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();

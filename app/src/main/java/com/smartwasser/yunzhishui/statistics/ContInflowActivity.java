@@ -24,21 +24,17 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
-import com.smartwasser.yunzhishui.alarmbean.CountBean;
 import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
 import com.smartwasser.yunzhishui.net.HttpLoader;
-import com.smartwasser.yunzhishui.productionactivity.ContractActivity;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
-import com.smartwasser.yunzhishui.utils.ListViewUtils;
 import com.smartwasser.yunzhishui.utils.PopListViewUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
 import com.smartwasser.yunzhishui.utils.TimeUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -98,7 +94,8 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("厂进水量指标统计");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("报表");
 
@@ -137,16 +134,9 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
         mTvShuiChang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListViewUtils utils=new ListViewUtils(getApplicationContext());
-                minitListView=utils.initListView(mlist);
-                PopupWindowUtils.showPopupWindow(minitListView,mTvShuiChang);
-                minitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        mTvShuiChang.setText(mlist.get(position));
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
+                /**单位*/
+                minitListView5=initListView5();
+                PopupWindowUtils.showPopupWindow( minitListView5,mTvShuiChang);
             }
         });
         button_menu.setOnClickListener(new View.OnClickListener() {
@@ -439,7 +429,8 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
     }
 
 
-    private ListView initListView5() {
+    private ListView initListView5(){
+
         ListView mListViews = new ListView(this);
         mListViews.setDividerHeight(0);
         mListViews.setBackgroundResource(R.drawable.listview_background);
@@ -451,4 +442,7 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
                 BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
         return mListViews;
     }
+
+
+
 }

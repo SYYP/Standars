@@ -18,6 +18,7 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,7 +79,8 @@ public class PumpStateActivity extends BaseActivity {
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("泵站运行状态查询");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("曲线");
     }

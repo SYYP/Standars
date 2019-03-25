@@ -21,6 +21,8 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.IntersetBean;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
+import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
 import com.smartwasser.yunzhishui.utils.ListViewUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
 
@@ -42,7 +44,8 @@ public class InterestCountActivity extends BaseActivity {
     private WebView mWebView;
     private TextView mRightTitle;
     private LinearLayout mWebLinea;
-
+    private EditText ed_interset_rdit;
+    private DialogTimeUtils dialog = new DialogTimeUtils(this);
     @Override
     protected int initContentView() {
         return R.layout.activity_interset_count;
@@ -57,7 +60,15 @@ public class InterestCountActivity extends BaseActivity {
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebView = findViewById(R.id.chartshow_wbs);
-
+        ed_interset_rdit = findViewById(R.id.ed_interset_rdit);
+        ed_interset_rdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /**开始时间*/
+                dialog.show(ed_interset_rdit);
+                dialog.showTime();
+            }
+        });
 
 
 // 设置可以支持缩放
@@ -75,7 +86,8 @@ public class InterestCountActivity extends BaseActivity {
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("全厂设备利率里、完好率");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("报表");
         mWebView.loadUrl("javascript:doCreatChart('bar',[89,78,77,44,66,83,56,26,97,56,12,48]);");

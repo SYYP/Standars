@@ -26,6 +26,7 @@ import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
 import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
 import com.smartwasser.yunzhishui.net.HttpLoader;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
@@ -90,7 +91,8 @@ public class BuildCountActivity extends BaseActivity implements View.OnClickList
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("厂用电量年统计");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("报表");
     }
@@ -305,6 +307,7 @@ public class BuildCountActivity extends BaseActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.tv_shui_chang_edit:
                 minitListView5 = initListView5();
+                PopupWindowUtils.showPopupWindow( minitListView5,tv_shui_chang_edit);
                 break;
             case R.id.ed_count_strattime:
                 /**开始时间*/

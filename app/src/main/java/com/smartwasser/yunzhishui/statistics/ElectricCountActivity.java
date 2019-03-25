@@ -1,11 +1,14 @@
 package com.smartwasser.yunzhishui.statistics;
 
+import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.rmondjone.locktableview.DisplayUtil;
 import com.rmondjone.locktableview.LockTableView;
 import com.rmondjone.xrecyclerview.ProgressStyle;
@@ -20,17 +24,23 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
-import com.smartwasser.yunzhishui.utils.ListViewUtils;
+import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
+import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
+import com.smartwasser.yunzhishui.net.HttpLoader;
+import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
+import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by 15810 on 2019/2/27.
  */
 
-public class ElectricCountActivity extends BaseActivity {
+public class ElectricCountActivity extends BaseActivity implements View.OnClickListener, HttpLoader.ResponseListener {
     private List<String> mlist;
     private ListView minitListView;
     private LinearLayout contentView;
@@ -38,7 +48,16 @@ public class ElectricCountActivity extends BaseActivity {
     private ImageButton button_menu;
     private TextView tv_toolbar;
     private TextView mRightTitle;
+    private ListView minitListView5;
     private WebView mWdebView;
+    private EditText tv_shui_chang_edit;
+    private EditText ed_count_strattime;
+    private MyBusinesAdapter myBusinesAdapter;
+    private BusinessUnitResponse mBusinessUnit;
+
+    private String code = "";
+    private DialogTimeUtils dialog = new DialogTimeUtils(this);
+
     @Override
     protected int initContentView() {
         return R.layout.activity_count_inflow;
@@ -47,26 +66,28 @@ public class ElectricCountActivity extends BaseActivity {
     @Override
     protected void initView() {
         contentView = findViewById(R.id.contentView);
-        button_menu= (ImageButton) findViewById(R.id.button_menu);
+        button_menu = (ImageButton) findViewById(R.id.button_menu);
         mRightTitle = (TextView) findViewById(R.id.right_title);
-        tv_toolbar= (TextView) findViewById(R.id.tv_toolbar);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        mWdebView= (WebView) findViewById(R.id.chartshow_wb);
-            //进行webwiev的一堆设置
-            //开启本地文件读取（默认为true，不设置也可以）
+        tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mWdebView = (WebView) findViewById(R.id.chartshow_wb);
+        ed_count_strattime = findViewById(R.id.ed_count_strattime);
+        tv_shui_chang_edit = findViewById(R.id.tv_shui_chang_edit);
+        tv_shui_chang_edit.setOnClickListener(this);
+        ed_count_strattime.setOnClickListener(this);
+        //进行webwiev的一堆设置
+        //开启本地文件读取（默认为true，不设置也可以）
         mWdebView.getSettings().setAllowFileAccess(true);
-            //开启脚本支持
+        //开启脚本支持
         mWdebView.getSettings().setJavaScriptEnabled(true);
         mWdebView.loadUrl("file:///android_asset/myechart.html");
-
-
-
 
 
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
-        tv_toolbar.setText("厂用电量年统计");
+        RmonMenuResponse.DataBean dataBean = (RmonMenuResponse.DataBean) getIntent().getSerializableExtra("title");
+        tv_toolbar.setText(dataBean.getFuncnamech());
         setSupportActionBar(toolbar);
         mRightTitle.setText("报表");
     }
@@ -96,12 +117,12 @@ public class ElectricCountActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String btnText = mRightTitle.getText().toString();
-                if ("报表".equals(btnText)){
+                if ("报表".equals(btnText)) {
                     mWdebView.loadUrl("javascript:doCreatChart('bar',[89,78,77,44,66,83,56,26,97,56,12,48]);");
                     contentView.setVisibility(View.GONE);
                     mWdebView.setVisibility(View.VISIBLE);
                     mRightTitle.setText("表格");
-                }else {
+                } else {
                     contentView.setVisibility(View.VISIBLE);
                     mWdebView.setVisibility(View.GONE);
                     mRightTitle.setText("报表");
@@ -122,20 +143,18 @@ public class ElectricCountActivity extends BaseActivity {
         mTableDatas.add(titleList);
 
 
-
-
         ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
-        for (int i=0;i<20;i++){
+        for (int i = 0; i < 20; i++) {
             int num = (int) ((Math.random() * 9 + 1) * 100000);
             CountBean bean2 = new CountBean();
-            bean2.setT0("201"+i+2+"年度");
-            bean2.setT2(num+"");
-            bean2.setT1(num+"12"+i);
+            bean2.setT0("201" + i + 2 + "年度");
+            bean2.setT2(num + "");
+            bean2.setT1(num + "12" + i);
             mRowDatas.add(bean2);
         }
 
 
-        for (int i=0;i<mRowDatas.size();i++){
+        for (int i = 0; i < mRowDatas.size(); i++) {
             ArrayList<String> fieldList = new ArrayList<>();
             fieldList.add(mRowDatas.get(i).getT0());
             fieldList.add(mRowDatas.get(i).getT1());
@@ -170,18 +189,18 @@ public class ElectricCountActivity extends BaseActivity {
                 .setTableViewRangeListener(new LockTableView.OnTableViewRangeListener() {
                     @Override
                     public void onLeft(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最左边");
+                        Log.e("滚动边界", "滚动到最左边");
                     }
 
                     @Override
                     public void onRight(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最右边");
+                        Log.e("滚动边界", "滚动到最右边");
                     }
                 })//设置横向滚动边界监听
                 .setOnLoadingListener(new LockTableView.OnLoadingListener() {
                     @Override
                     public void onRefresh(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onRefresh",Thread.currentThread().toString());
+                        Log.e("onRefresh", Thread.currentThread().toString());
 //                        Handler handler = new Handler();
 //                        handler.postDelayed(new Runnable() {
 //                            @Override
@@ -211,7 +230,7 @@ public class ElectricCountActivity extends BaseActivity {
 
                     @Override
                     public void onLoadMore(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onLoadMore",Thread.currentThread().toString());
+                        Log.e("onLoadMore", Thread.currentThread().toString());
 //                        Handler handler = new Handler();
 //                        handler.postDelayed(new Runnable() {
 //                            @Override
@@ -237,13 +256,13 @@ public class ElectricCountActivity extends BaseActivity {
                 .setOnItemClickListenter(new LockTableView.OnItemClickListenter() {
                     @Override
                     public void onItemClick(View item, int position) {
-                        Log.e("点击事件",position+"");
+                        Log.e("点击事件", position + "");
                     }
                 })
                 .setOnItemLongClickListenter(new LockTableView.OnItemLongClickListenter() {
                     @Override
                     public void onItemLongClick(View item, int position) {
-                        Log.e("长按事件",position+"");
+                        Log.e("长按事件", position + "");
                     }
                 })
                 .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
@@ -269,6 +288,98 @@ public class ElectricCountActivity extends BaseActivity {
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_shui_chang_edit:
+                minitListView5 = initListView5();
+                PopupWindowUtils.showPopupWindow( minitListView5,tv_shui_chang_edit);
+                break;
+            case R.id.ed_count_strattime:
+                /**开始时间*/
+                dialog.show(ed_count_strattime);
+                dialog.showTime();
+                break;
+        }
+    }
 
+    private ListView initListView5() {
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,
+                BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
+        return mListViews;
+    }
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
+                && response instanceof BusinessUnitResponse) {
+            mBusinessUnit = (BusinessUnitResponse) response;
+            if ("00000".equals(mBusinessUnit.getErrorCode())) {
+                myBusinesAdapter = new MyBusinesAdapter();
+                minitListView5.setAdapter(myBusinesAdapter);
+                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        tv_shui_chang_edit.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+
+    }
+
+
+    /*条目的适配器*/
+    class MyBusinesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mBusinessUnit.getData().getComboboxList().size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(ElectricCountActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+
+    class ViewHolder {
+        TextView v_listview_item_number;
+    }
 
 }

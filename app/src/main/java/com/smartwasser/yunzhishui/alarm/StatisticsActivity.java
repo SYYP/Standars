@@ -8,29 +8,35 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.adapter.alarm.Tadapter;
+import com.smartwasser.yunzhishui.bean.RBResponse;
+import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
+import com.smartwasser.yunzhishui.net.HttpLoader;
 import com.smartwasser.yunzhishui.statistics.BuildCountActivity;
 import com.smartwasser.yunzhishui.statistics.ContInflowActivity;
 import com.smartwasser.yunzhishui.statistics.EcectrMothActivity;
 import com.smartwasser.yunzhishui.statistics.ElectricCountActivity;
 import com.smartwasser.yunzhishui.statistics.InterestCountActivity;
+import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by 15810 on 2019/2/22.
  */
 
-public class StatisticsActivity extends BaseActivity {
+public class StatisticsActivity extends BaseActivity implements HttpLoader.ResponseListener{
     private ListView mListView;
     private List<String> mlist;
     private Toolbar toolbar;
     private ImageButton button_menu;
     private TextView tv_toolbar;
-
+    private RmonMenuResponse menuResponse;
     @Override
     protected int initContentView() {
         return R.layout.avtivity_alarm;
@@ -42,6 +48,7 @@ public class StatisticsActivity extends BaseActivity {
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mListView = findViewById(R.id.wraing_list);
+
         toolbar.setTitle("");
         tv_toolbar.setText("汇总统计");
         setSupportActionBar(toolbar);
@@ -54,29 +61,29 @@ public class StatisticsActivity extends BaseActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                List<RmonMenuResponse.DataBean> data = menuResponse.getData();
+                RmonMenuResponse.DataBean dataBean = data.get(i);
+                Intent intent = null;
                 switch (i) {
                     case 0:
-                        Intent intent = new Intent(StatisticsActivity.this,ContInflowActivity.class);
-                        startActivity(intent);
+                        intent   = new Intent(StatisticsActivity.this,ContInflowActivity.class);
                         break;
                     case 1:
-                        Intent intent2 = new Intent(StatisticsActivity.this,InterestCountActivity.class);
-                        startActivity(intent2);
+                        intent = new Intent(StatisticsActivity.this,InterestCountActivity.class);
                         break;
                     case 2:
-                        Intent intent3 = new Intent(StatisticsActivity.this,ElectricCountActivity.class);
-                        startActivity(intent3);
+                        intent = new Intent(StatisticsActivity.this,ElectricCountActivity.class);
                         break;
                     case 3:
-                        Intent intent4= new Intent(StatisticsActivity.this,EcectrMothActivity.class);
-                        startActivity(intent4);
+                        intent= new Intent(StatisticsActivity.this,EcectrMothActivity.class);
                         break;
                     case 4:
-                        Intent intent5 = new Intent(StatisticsActivity.this,BuildCountActivity.class);
-                        startActivity(intent5);
-                        break;
+                        intent = new Intent(StatisticsActivity.this,BuildCountActivity.class);
 
+                        break;
                 }
+                intent.putExtra("title",dataBean);
+                startActivity(intent);
             }
         });
 
@@ -96,7 +103,27 @@ public class StatisticsActivity extends BaseActivity {
         mlist.add("厂用电量年统计");
         mlist.add("厂用电量月统计");
         mlist.add("构筑物用电量月统计");
-        Tadapter tadapter = new Tadapter(this, mlist);
-        mListView.setAdapter(tadapter);
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("id","138372713004600042063");
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCMENULIST, prams,
+                RmonMenuResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCMENULIST, this).setTag(this);
+//        Tadapter tadapter = new Tadapter(this, mlist);
+//        mListView.setAdapter(tadapter);
+    }
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCMENULIST
+                && response instanceof RmonMenuResponse) {
+            menuResponse = (RmonMenuResponse) response;
+            List<RmonMenuResponse.DataBean> data = menuResponse.getData();
+            Tadapter tadapter = new Tadapter(this, data);
+            mListView.setAdapter(tadapter);
+        }
+    }
+
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+
     }
 }

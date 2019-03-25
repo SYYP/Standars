@@ -37,10 +37,10 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
     private SwipeRefreshLayout downRefresh;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
-    private String[] mText ={"远程监控","预报预警","汇总统计","泵站监测","历史查询","数据分析","远程控制"};
+    private String[] mText ={"远程监控","预报预警","汇总统计","历史查询","数据分析","远程控制"};
 //    private String[] mText ={"生产数据","生产成本","远程监控","设备运行","污泥运输","生产指标","采购","防汛信息","工艺预测","远程调控"};
 //    private int[] icon={R.drawable.home_11,R.drawable.home_22,R.drawable.home_33,R.drawable.home_44,R.drawable.home_55,R.drawable.home_66,R.drawable.home_77,R.drawable.home_99,R.drawable.home_88,R.drawable.home_10};
-    private int[] icon={R.drawable.home_33,R.drawable.home_11,R.drawable.home_22,R.drawable.home_44,R.drawable.home_66,R.drawable.home_77,R.drawable.home_88};
+    private int[] icon={R.drawable.home_33,R.drawable.home_11,R.drawable.home_22,R.drawable.home_66,R.drawable.home_77,R.drawable.home_88};
 
     public HomePager(Context context) {
         super(context);
@@ -147,18 +147,17 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
                                 /**设备运行*/
 //                                Intent intent3=new Intent(context,DeviceActivity.class);
 //                                context.startActivity(intent3);
-                                Intent intent3=new Intent(context,RealMonitorActivity.class);
-                                 context.startActivity(intent3);
-                                break;
-                            case 4:
                                 /**跳转到污泥运输*/
                                 Intent intent4=new Intent(context,HistoryRecordActivity.class);
                                 context.startActivity(intent4);
                                 break;
+                            case 4:
+
+                                break;
                             case 7:
                                 /**防汛系统*/
-                                Intent intent8=new Intent(context, FloodcontrolActivity.class);
-                                context.startActivity(intent8);
+//                                Intent intent8=new Intent(context, FloodcontrolActivity.class);
+//                                context.startActivity(intent8);
                                 break;
                             case 6:
                                 /**采购*/
