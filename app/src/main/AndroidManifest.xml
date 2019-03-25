@@ -167,19 +167,19 @@
         <activity
             android:name=".datatable.WringTableActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"></activity>
+          ></activity>
         <activity
             android:name=".alarm.AlarmQueryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"></activity>
+          ></activity>
         <activity
             android:name=".statistics.ContInflowActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"></activity>
+         ></activity>
         <activity
             android:name=".statistics.InterestCountActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"></activity>
+         ></activity>
         <activity android:name=".statistics.BuildCountActivity"></activity>
 
         <activity android:name=".statistics.EcectrMothActivity"></activity>

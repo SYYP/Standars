@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smartwasser.yunzhishui.Activity.BzjcActivity;
 import com.smartwasser.yunzhishui.Activity.DataMainActivity;
+import com.smartwasser.yunzhishui.Activity.RealMonitorActivity;
 import com.smartwasser.yunzhishui.alarm.AlarmActivity;
 import com.smartwasser.yunzhishui.alarm.StatisticsActivity;
 import com.smartwasser.yunzhishui.floodcontrolactivity.FloodcontrolActivity;
@@ -143,8 +145,10 @@ public class HomePager extends BasePager implements SwipeRefreshLayout.OnRefresh
                                 break;
                             case 3:
                                 /**设备运行*/
-                                Intent intent3=new Intent(context,DeviceActivity.class);
-                                context.startActivity(intent3);
+//                                Intent intent3=new Intent(context,DeviceActivity.class);
+//                                context.startActivity(intent3);
+                                Intent intent3=new Intent(context,RealMonitorActivity.class);
+                                 context.startActivity(intent3);
                                 break;
                             case 4:
                                 /**跳转到污泥运输*/

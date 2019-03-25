@@ -16,7 +16,7 @@ import java.util.List;
 public class SimpleTreeListViewAdapter5<T> extends TreeListViewAdapter<T>
 {
 	private int[]iconSon={R.drawable.jiankong1,R.drawable.rmon1,R.drawable.rmon2,R.drawable.yellowss};
-	private int[]icon=new int[]{R.drawable.jiankong,R.drawable.chaxun,R.drawable.hetong};
+	private int[]icon=new int[]{R.drawable.jiankong,R.drawable.chaxun,R.drawable.hetong,R.drawable.zx,R.drawable.zzt,R.drawable.cha_1,R.drawable.cha_2};
 	public SimpleTreeListViewAdapter5(ListView tree, Context context,
 									  List<T> datas, int defaultExpandLevel)
 			throws IllegalArgumentException, IllegalAccessException
@@ -52,23 +52,6 @@ public class SimpleTreeListViewAdapter5<T> extends TreeListViewAdapter<T>
 			holder.item_pull .setImageResource(node.getIcon());
 		}
 		holder.mText.setText(node.getName());
-		if(node.isleaf()){
-			if("138372609457828586382".equals(node.getId())){
-				holder.mIcon.setImageResource(iconSon[0]);
-			}else if("139962732492125113615".equals(node.getId())){
-				holder.mIcon.setImageResource(iconSon[1]);
-			}else if("139962732492125113616".equals(node.getId())){
-				holder.mIcon.setImageResource(iconSon[2]);
-			}
-		}else {
-			if("136272096970931770620".equals(node.getId())){
-				holder.mIcon.setImageResource(icon[0]);
-			}else if("138372614509302817214".equals(node.getId())){
-				holder.mIcon.setImageResource(icon[1]);
-			}else{
-				holder.mIcon.setImageResource(icon[2]);
-			}
-		}
 		return convertView;
 	}
 

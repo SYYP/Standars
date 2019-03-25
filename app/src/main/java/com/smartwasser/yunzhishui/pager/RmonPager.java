@@ -2,6 +2,7 @@ package com.smartwasser.yunzhishui.pager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
+import com.smartwasser.yunzhishui.Activity.RealMonitorActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.adapter.SimpleTreeListViewAdapter4;
 import com.smartwasser.yunzhishui.adapter.SimpleTreeListViewAdapter5;
@@ -33,6 +35,7 @@ import org.seny.android.utils.MyToast;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import okhttp3.Call;
@@ -61,6 +64,7 @@ public class RmonPager  extends BasePager implements HttpLoader.ResponseListener
     @Override
     public void initDatas() throws IllegalAccessException {
         HashMap<String, Object> prams = new HashMap<>();
+        prams.put("id","136272096970931770620");
         HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCMENULIST, prams,
                 RmonMenuResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCMENULIST, this).setTag(this);
 //        getRmonPageData();
@@ -70,6 +74,7 @@ public class RmonPager  extends BasePager implements HttpLoader.ResponseListener
         if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCMENULIST
                 && response instanceof RmonMenuResponse) {
             mProduct = (RmonMenuResponse) response;
+            Log.d(this.getClass().getSimpleName(),mProduct.getData().toString());
             if ("00000".equals(mProduct.getErrorCode())) {
                 tlu.initDataText7(mProduct);
                 try {
@@ -82,14 +87,31 @@ public class RmonPager  extends BasePager implements HttpLoader.ResponseListener
                     @Override
                     public void onClick(Node node, int position) {
                         if (node.isleaf()) {
-                            String s= mProduct.getData().get(0).getFuncurl();
-                            String arr[]=s.split("\\?");
-                            if(arr.length>=2){
-                            String m[]=arr[1].split("=");
-                            sear.setNodeId(m[1]);
-                            }
+//                            String s= mProduct.getData().get(0).getFuncurl();
+//                            String arr[]=s.split("\\?");
+//                            if(arr.length>=2){
+//                            String m[]=arr[1].split("=");
+//                            sear.setNodeId(m[1]);
+//                            }
                             switch (node.getId()) {
+                                /*能源监测电厂的参数*/
                                 case "138372609457828586382":
+                                case "0d5f47d943cb11e9ae82089e01f500fd":
+                                /*泵站监测参数*/
+                                case "b6ef005a43ca11e9ae82089e01f500fd":
+                                case "c2178fbf43ca11e9ae82089e01f500fd":
+
+                                    /*能源水场的参数*/
+                                case"7c0ef19243ca11e9ae82089e01f500fd":
+                                case "8994e00943ca11e9ae82089e01f500fd":
+
+                                    List<RmonMenuResponse.DataBean> mProductData = mProduct.getData();
+                                    for (RmonMenuResponse.DataBean data: mProductData){
+                                        if (node.getId().equals(data.getId())){
+                                            sear.setAddId(data.getFuncurl());
+                                            sear.setContractunitName(data.getFuncnamech());
+                                        }
+                                    }
                                     /**跳到清河*/
                                     EventBus.getDefault().postSticky(sear);
                                     Intent intent12 = new Intent(mContext,RmonRealTimeActivity.class);
@@ -107,6 +129,13 @@ public class RmonPager  extends BasePager implements HttpLoader.ResponseListener
                                     Intent intent3= new Intent(mContext,RmonStateActivity.class);
                                     intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     mContext.startActivity(intent3);
+                                    break;
+                                    /*點位監測的頁面*/
+                                case "e85b0d3a43ca11e9ae82089e01f500fd":
+                                    Intent intent4=new Intent(mContext,RealMonitorActivity.class);
+                                    intent4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    mContext.startActivity(intent4);
+                                    break;
                             }
                         }
                     }

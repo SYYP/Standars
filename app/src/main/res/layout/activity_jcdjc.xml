@@ -110,6 +110,8 @@
                     <LinearLayout style="@style/linerlayout">
 
                         <Button
+                            android:gravity="center"
+                            android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/base30dp"
                             android:background="@drawable/login_loginbutton_pressed"
