@@ -372,11 +372,12 @@ public class BuildCountActivity extends BaseActivity implements View.OnClickList
                 });
             }
         }
+        /*點擊查詢的網絡接口*/
         if (requestCode == ConstantsYunZhiShui.NEWSHUIZHIYUN.BUILDCOUNT_CODE
                 &&response instanceof BuildCountBean){
             BuildCountBean buildCountBean = (BuildCountBean) response;
-            String s = buildCountBean.getData().toString();
-            Log.d(this.getClass().getSimpleName(),s);
+            List<BuildCountBean.DataBean> data = buildCountBean.getData();
+
         }
     }
 
