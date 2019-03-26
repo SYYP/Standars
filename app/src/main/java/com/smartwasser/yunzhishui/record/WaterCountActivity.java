@@ -86,6 +86,7 @@ public class WaterCountActivity extends BaseActivity implements View.OnClickList
     private Button run_data_btn;
     private TextView tv_yibiao;
     private Button water_data_btn;
+    private ImageButton button_fan;
     @Override
     protected int initContentView() {
         return R.layout.activity_water_count;
@@ -109,7 +110,7 @@ public class WaterCountActivity extends BaseActivity implements View.OnClickList
         ed_water_strattime= (EditText) findViewById(R.id.ed_water_strattime);
         ed_water_endtime= (EditText) findViewById(R.id.ed_water_endtime);
         water_data_btn= (Button) findViewById(R.id.water_data_btn);
-
+        button_fan = (ImageButton) findViewById(R.id.button_fan);
         ed_water_unit.setOnClickListener(this);
         ed_water_goujian.setOnClickListener(this);
         ed_water_yibiao.setOnClickListener(this);

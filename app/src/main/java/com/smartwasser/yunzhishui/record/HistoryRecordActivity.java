@@ -25,7 +25,7 @@ import java.util.List;
  * Created by 15810 on 2019/3/1.
  */
 
-public class HistoryRecordActivity extends BaseActivity implements HttpLoader.ResponseListener{
+public class HistoryRecordActivity extends BaseActivity implements HttpLoader.ResponseListener,View.OnClickListener{
     private ListView mListView;
     private List<String> mlist;
     private Toolbar toolbar;
@@ -33,6 +33,7 @@ public class HistoryRecordActivity extends BaseActivity implements HttpLoader.Re
     private TextView tv_toolbar;
     private RmonMenuResponse menuResponse;
     private List<RmonMenuResponse.DataBean> data;
+    private ImageButton button_fan;
 
     @Override
     protected int initContentView() {
@@ -46,6 +47,7 @@ public class HistoryRecordActivity extends BaseActivity implements HttpLoader.Re
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         button_menu.setVisibility(View.VISIBLE);
+
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
         tv_toolbar.setText("历史查询");
@@ -121,6 +123,11 @@ public class HistoryRecordActivity extends BaseActivity implements HttpLoader.Re
 
     @Override
     public void onGetResponseError(int requestCode, VolleyError error) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 }

@@ -39,10 +39,10 @@ public class RmonSelectResponse extends RBResponse {
     }
 
     public static class DataEntity {
-        private List<?> dataList;
+        private List<String> dataList;
         private List<String> dateArray;
 
-        public void setDataList(List<?> dataList) {
+        public void setDataList(List<String> dataList) {
             this.dataList = dataList;
         }
 
@@ -50,7 +50,7 @@ public class RmonSelectResponse extends RBResponse {
             this.dateArray = dateArray;
         }
 
-        public List<?> getDataList() {
+        public List<String> getDataList() {
             return dataList;
         }
 

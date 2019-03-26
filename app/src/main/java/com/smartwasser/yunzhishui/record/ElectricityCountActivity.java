@@ -87,7 +87,7 @@ public class ElectricityCountActivity extends BaseActivity implements View.OnCli
     private EditText ed_electricity_endtime;
     private Button electricity_data_btn;
     private EditText ed_electricity_name;
-
+    private ImageButton button_fan;
 
     @Override
     protected int initContentView() {
@@ -112,7 +112,7 @@ public class ElectricityCountActivity extends BaseActivity implements View.OnCli
         ed_electricity_strattime = findViewById(R.id.ed_electricity_strattime);
         ed_electricity_endtime = findViewById(R.id.ed_electricity_endtime);
         electricity_data_btn = findViewById(R.id.electricity_data_btn);
-
+        button_fan = (ImageButton) findViewById(R.id.button_fan);
         ed_electricity_unit.setOnClickListener(this);
         ed_electricity_goujian.setOnClickListener(this);
         ed_electricity_yibiao.setOnClickListener(this);

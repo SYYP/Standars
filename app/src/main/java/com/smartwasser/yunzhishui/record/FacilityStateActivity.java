@@ -89,6 +89,9 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
     private EditText ed_facility_endtime;
     private Button ed_facility_btn;
     private EditText ed_facility_name;
+    private ImageButton button_fan;
+    private ArrayList<ArrayList<String>> mTableDatas;
+
     @Override
     protected int initContentView() {
         return R.layout.activity_facility_state;
@@ -118,7 +121,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
         ed_facility_strattime = findViewById(R.id.ed_facility_strattime);
         ed_facility_endtime = findViewById(R.id.ed_facility_endtime);
         ed_facility_btn = findViewById(R.id.ed_facility_btn);
-
+        button_fan = (ImageButton) findViewById(R.id.button_fan);
         ed_facility_unit.setOnClickListener(this);
         ed_facility_goujian.setOnClickListener(this);
         ed_facility_yibiao.setOnClickListener(this);
@@ -132,6 +135,12 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initListener() {
+        button_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         initDisplayOpinion();
 
         initAdapter();
@@ -170,7 +179,7 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
 
     private void initAdapter() {
         //构造假数据
-        ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
+        mTableDatas = new ArrayList<ArrayList<String>>();
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("行号");
         titleList.add("时间");
@@ -180,144 +189,19 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
 
 
 
-        ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
-        for (int i=0;i<20;i++){
-            int num = (int) ((Math.random() * 9 + 1) * 100000);
-            CountBean bean2 = new CountBean();
+//        ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
+//        for (int i=0;i<20;i++){
+//            int num = (int) ((Math.random() * 9 + 1) * 100000);
+//            CountBean bean2 = new CountBean();
+//
+//            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+//            String t=format.format(new Date());
+//            bean2.setT0(i+"");
+//            bean2.setT2(bean2+"m3/h");
+//            bean2.setT1(t);
+//            mRowDatas.add(bean2);
+//        }
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
-            String t=format.format(new Date());
-            bean2.setT0(i+"");
-            bean2.setT2(bean2+"m3/h");
-            bean2.setT1(t);
-            mRowDatas.add(bean2);
-        }
-
-
-        for (int i=0;i<mRowDatas.size();i++){
-            ArrayList<String> fieldList = new ArrayList<>();
-            fieldList.add(mRowDatas.get(i).getT0());
-            fieldList.add(mRowDatas.get(i).getT1());
-            fieldList.add(mRowDatas.get(i).getT2());
-            mTableDatas.add(fieldList);
-        }
-
-        final LockTableView mLockTableView = new LockTableView(this, contentView, mTableDatas);
-        Log.e("表格加载开始", "当前线程：" + Thread.currentThread());
-        mLockTableView.setLockFristColumn(false) //是否锁定第一列
-                .setLockFristRow(true) //是否锁定第一行
-                .setMaxColumnWidth(200) //列最大宽度
-                .setMinColumnWidth(60) //列最小宽度
-//                .setColumnWidth(1,30) //设置指定列文本宽度
-//                .setColumnWidth(0,20) //设置指定列文本宽度
-//                .setColumnWidth(1,50)
-//                .setColumnWidth(0,50)
-                .setColumnWidth(1, 100)
-                .setColumnWidth(0, 50)
-                .setMinRowHeight(5)//行最小高度
-                .setMaxRowHeight(3)//行最大高度
-                .setTextViewSize(13) //单元格字体大小
-                .setFristRowBackGroudColor(R.color.table_head)//表头背景色
-                .setTableHeadTextColor(R.color.beijin)//表头字体颜色
-                .setTableContentTextColor(R.color.border_color)//单元格字体颜色
-                .setCellPadding(15)//设置单元格内边距(dp)
-                .setNullableString("N/A") //空值替换值
-                .setTableViewListener(new LockTableView.OnTableViewListener() {
-                    @Override
-                    public void onTableViewScrollChange(int x, int y) {
-//                        Log.e("滚动值","["+x+"]"+"["+y+"]");
-                    }
-                })//设置横向滚动回调监听
-                .setTableViewRangeListener(new LockTableView.OnTableViewRangeListener() {
-                    @Override
-                    public void onLeft(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最左边");
-                    }
-
-                    @Override
-                    public void onRight(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最右边");
-                    }
-                })//设置横向滚动边界监听
-                .setOnLoadingListener(new LockTableView.OnLoadingListener() {
-                    @Override
-                    public void onRefresh(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onRefresh",Thread.currentThread().toString());
-//                        Handler handler = new Handler();
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-////                                Log.e("现有表格数据", mTableDatas.toString());
-//                                //构造假数据
-//                                ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
-//                                ArrayList<String> mfristData = new ArrayList<String>();
-//                                mfristData.add("标题");
-//                                for (int i = 0; i < 10; i++) {
-//                                    mfristData.add("标题" + i);
-//                                }
-//                                mTableDatas.add(mfristData);
-//                                for (int i = 0; i < 20; i++) {
-//                                    ArrayList<String> mRowDatas = new ArrayList<String>();
-//                                    mRowDatas.add("标题" + i);
-//                                    for (int j = 0; j < 10; j++) {
-//                                        mRowDatas.add("数据" + j);
-//                                    }
-//                                    mTableDatas.add(mRowDatas);
-//                                }
-//                                mLockTableView.setTableDatas(mTableDatas);
-//                                mXRecyclerView.refreshComplete();
-//                            }
-//                        }, 1000);
-                    }
-
-                    @Override
-                    public void onLoadMore(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onLoadMore",Thread.currentThread().toString());
-//                        Handler handler = new Handler();
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if (mTableDatas.size() <= 60) {
-//                                    for (int i = 0; i < 10; i++) {
-//                                        ArrayList<String> mRowDatas = new ArrayList<String>();
-//                                        mRowDatas.add("标题" + (mTableDatas.size() - 1));
-//                                        for (int j = 0; j < 10; j++) {
-//                                            mRowDatas.add("数据" + j);
-//                                        }
-//                                        mTableDatas.add(mRowDatas);
-//                                    }
-//                                    mLockTableView.setTableDatas(mTableDatas);
-//                                } else {
-//                                    mXRecyclerView.setNoMore(true);
-//                                }
-//                                mXRecyclerView.loadMoreComplete();
-//                            }
-//                        }, 1000);
-                    }
-                })
-                .setOnItemClickListenter(new LockTableView.OnItemClickListenter() {
-                    @Override
-                    public void onItemClick(View item, int position) {
-                        Log.e("点击事件",position+"");
-                    }
-                })
-                .setOnItemLongClickListenter(new LockTableView.OnItemLongClickListenter() {
-                    @Override
-                    public void onItemLongClick(View item, int position) {
-                        Log.e("长按事件",position+"");
-                    }
-                })
-                .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
-                .show(); //显示表格,此方法必须调用
-//        mLockTableView.getTableScrollView().setPullRefreshEnabled(true);
-//        mLockTableView.getTableScrollView().setLoadingMoreEnabled(true);
-        mLockTableView.getTableScrollView().setRefreshProgressStyle(ProgressStyle.SquareSpin);
-        //属性值获取
-        Log.e("每列最大宽度(dp)", mLockTableView.getColumnMaxWidths().toString());
-        Log.e("每行最大高度(dp)", mLockTableView.getRowMaxHeights().toString());
-        Log.e("表格所有的滚动视图", mLockTableView.getScrollViews().toString());
-        Log.e("表格头部固定视图(锁列)", mLockTableView.getLockHeadView().toString());
-        Log.e("表格头部固定视图(不锁列)", mLockTableView.getUnLockHeadView().toString());
     }
     private void initDisplayOpinion() {
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -390,12 +274,23 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
                 Toast.makeText(FacilityStateActivity.this, "此时间段没有数据", Toast.LENGTH_SHORT).show();
             }
             if("00000".equals( mQuota.getErrorCode())){
-                String sb=ed_facility_yibiao.getText().toString();
-                event.setRmon(mQuota);
-                event.setUserName(sb);
-                EventBus.getDefault().postSticky(event);
-                Intent intent=new Intent(FacilityStateActivity.this,SelectResultActivity.class);
-                startActivity(intent);
+//                String sb=ed_facility_yibiao.getText().toString();
+//                event.setRmon(mQuota);
+                RmonSelectResponse.DataEntity data = mQuota.getData();
+                List<String> dataList = data.getDataList();
+                List<String> dateArray = data.getDateArray();
+                for (int i=0;i<dateArray.size();i++){
+                    ArrayList<String> fieldList = new ArrayList<>();
+                    fieldList.add(String.valueOf(i+1));
+                    fieldList.add(dateArray.get(i));
+                    fieldList.add(dataList.get(i));
+                    mTableDatas.add(fieldList);
+                }
+                getListData();
+//                event.setUserName(sb);
+//                EventBus.getDefault().postSticky(event);
+//                Intent intent=new Intent(FacilityStateActivity.this,SelectResultActivity.class);
+//                startActivity(intent);
             }
             dismissProgressDialog();
         }
@@ -488,13 +383,6 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         ed_facility_name.setText(plu.mListView8.get(position));
-                        if("精细查询".equals( ed_facility_name.getText().toString())){
-//                            image_shunshi.setVisibility(View.GONE);
-//                            ed_shunshi.setVisibility(View.GONE);
-                        }else{
-//                            image_shunshi.setVisibility(View.VISIBLE);
-//                            ed_shunshi.setVisibility(View.VISIBLE);
-                        }
                         PopupWindowUtils.closePopupWindow();
                     }
                 });
@@ -506,13 +394,6 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         ed_facility_type.setText(plu.mListView9.get(position));
-                        if("精细查询".equals( ed_facility_type.getText().toString())){
-//                            image_shunshi.setVisibility(View.GONE);
-//                            ed_shunshi.setVisibility(View.GONE);
-                        }else{
-//                            image_shunshi.setVisibility(View.VISIBLE);
-//                            ed_shunshi.setVisibility(View.VISIBLE);
-                        }
                         PopupWindowUtils.closePopupWindow();
                     }
                 });
@@ -689,5 +570,125 @@ public class FacilityStateActivity extends BaseActivity implements View.OnClickL
     }
     class ViewHolder{
         TextView v_listview_item_number;
+    }
+
+
+    public void getListData(){
+        final LockTableView mLockTableView = new LockTableView(this, contentView, mTableDatas);
+        Log.e("表格加载开始", "当前线程：" + Thread.currentThread());
+        mLockTableView.setLockFristColumn(false) //是否锁定第一列
+                .setLockFristRow(true) //是否锁定第一行
+                .setMaxColumnWidth(200) //列最大宽度
+                .setMinColumnWidth(60) //列最小宽度
+//                .setColumnWidth(1,30) //设置指定列文本宽度
+//                .setColumnWidth(0,20) //设置指定列文本宽度
+//                .setColumnWidth(1,50)
+//                .setColumnWidth(0,50)
+                .setColumnWidth(1, 100)
+                .setColumnWidth(0, 50)
+                .setMinRowHeight(5)//行最小高度
+                .setMaxRowHeight(3)//行最大高度
+                .setTextViewSize(13) //单元格字体大小
+                .setFristRowBackGroudColor(R.color.table_head)//表头背景色
+                .setTableHeadTextColor(R.color.beijin)//表头字体颜色
+                .setTableContentTextColor(R.color.border_color)//单元格字体颜色
+                .setCellPadding(15)//设置单元格内边距(dp)
+                .setNullableString("N/A") //空值替换值
+                .setTableViewListener(new LockTableView.OnTableViewListener() {
+                    @Override
+                    public void onTableViewScrollChange(int x, int y) {
+//                        Log.e("滚动值","["+x+"]"+"["+y+"]");
+                    }
+                })//设置横向滚动回调监听
+                .setTableViewRangeListener(new LockTableView.OnTableViewRangeListener() {
+                    @Override
+                    public void onLeft(HorizontalScrollView view) {
+                        Log.e("滚动边界","滚动到最左边");
+                    }
+
+                    @Override
+                    public void onRight(HorizontalScrollView view) {
+                        Log.e("滚动边界","滚动到最右边");
+                    }
+                })//设置横向滚动边界监听
+                .setOnLoadingListener(new LockTableView.OnLoadingListener() {
+                    @Override
+                    public void onRefresh(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
+                        Log.e("onRefresh",Thread.currentThread().toString());
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+////                                Log.e("现有表格数据", mTableDatas.toString());
+//                                //构造假数据
+//                                ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
+//                                ArrayList<String> mfristData = new ArrayList<String>();
+//                                mfristData.add("标题");
+//                                for (int i = 0; i < 10; i++) {
+//                                    mfristData.add("标题" + i);
+//                                }
+//                                mTableDatas.add(mfristData);
+//                                for (int i = 0; i < 20; i++) {
+//                                    ArrayList<String> mRowDatas = new ArrayList<String>();
+//                                    mRowDatas.add("标题" + i);
+//                                    for (int j = 0; j < 10; j++) {
+//                                        mRowDatas.add("数据" + j);
+//                                    }
+//                                    mTableDatas.add(mRowDatas);
+//                                }
+//                                mLockTableView.setTableDatas(mTableDatas);
+//                                mXRecyclerView.refreshComplete();
+//                            }
+//                        }, 1000);
+                    }
+
+                    @Override
+                    public void onLoadMore(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
+                        Log.e("onLoadMore",Thread.currentThread().toString());
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (mTableDatas.size() <= 60) {
+//                                    for (int i = 0; i < 10; i++) {
+//                                        ArrayList<String> mRowDatas = new ArrayList<String>();
+//                                        mRowDatas.add("标题" + (mTableDatas.size() - 1));
+//                                        for (int j = 0; j < 10; j++) {
+//                                            mRowDatas.add("数据" + j);
+//                                        }
+//                                        mTableDatas.add(mRowDatas);
+//                                    }
+//                                    mLockTableView.setTableDatas(mTableDatas);
+//                                } else {
+//                                    mXRecyclerView.setNoMore(true);
+//                                }
+//                                mXRecyclerView.loadMoreComplete();
+//                            }
+//                        }, 1000);
+                    }
+                })
+                .setOnItemClickListenter(new LockTableView.OnItemClickListenter() {
+                    @Override
+                    public void onItemClick(View item, int position) {
+                        Log.e("点击事件",position+"");
+                    }
+                })
+                .setOnItemLongClickListenter(new LockTableView.OnItemLongClickListenter() {
+                    @Override
+                    public void onItemLongClick(View item, int position) {
+                        Log.e("长按事件",position+"");
+                    }
+                })
+                .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
+                .show(); //显示表格,此方法必须调用
+//        mLockTableView.getTableScrollView().setPullRefreshEnabled(true);
+//        mLockTableView.getTableScrollView().setLoadingMoreEnabled(true);
+        mLockTableView.getTableScrollView().setRefreshProgressStyle(ProgressStyle.SquareSpin);
+        //属性值获取
+        Log.e("每列最大宽度(dp)", mLockTableView.getColumnMaxWidths().toString());
+        Log.e("每行最大高度(dp)", mLockTableView.getRowMaxHeights().toString());
+        Log.e("表格所有的滚动视图", mLockTableView.getScrollViews().toString());
+        Log.e("表格头部固定视图(锁列)", mLockTableView.getLockHeadView().toString());
+        Log.e("表格头部固定视图(不锁列)", mLockTableView.getUnLockHeadView().toString());
     }
 }

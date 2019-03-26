@@ -102,7 +102,12 @@ public class WringTableActivity extends BaseActivity implements HttpLoader.Respo
                 finish();
             }
         });
-
+        mRunDataBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CoummtData();
+            }
+        });
     }
 
     @Override
@@ -338,13 +343,13 @@ public class WringTableActivity extends BaseActivity implements HttpLoader.Respo
         }
           //查询
         if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_BJQUERY
-                && response instanceof RundataResponse) {
-            RundataResponse mRunData = (RundataResponse) response;
+                && response instanceof ReimburseListResponse) {
+            ReimburseListResponse mRunData = (ReimburseListResponse) response;
             if ("00000".equals(mRunData.getErrorCode())) {
                 /**跳转到指定页面,并传值*/
-                EventBus.getDefault().postSticky(mRunData);
-                Intent intent = new Intent(WringTableActivity.this, RunDataReslutActivity.class);
-                startActivity(intent);
+//                EventBus.getDefault().postSticky(mRunData);
+//                Intent intent = new Intent(WringTableActivity.this, RunDataReslutActivity.class);
+//                startActivity(intent);
             }
             dismissProgressDialog();
         }
@@ -387,31 +392,6 @@ public class WringTableActivity extends BaseActivity implements HttpLoader.Respo
                 }
                 minitListView7 = initListView7();
                 PopupWindowUtils.showPopupWindow(minitListView7, mEdzb);
-                break;
-            case R.id.run_data_btn:
-
-                String dw=mEdUnit.getText().toString();
-                if("".equals(dw)||dw==null||"null".equals(dw)){
-                    Toast.makeText(WringTableActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String gzw=ed_goujian.getText().toString();
-                if("".equals(gzw)||gzw==null||"null".equals(gzw)){
-                    Toast.makeText(WringTableActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String sb=mEdzb.getText().toString();
-                if("".equals(sb)||sb==null||"null".equals(sb)){
-                    Toast.makeText(WringTableActivity.this, "请选择指标", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //网络去请求
-                HashMap<String, Object> prams = new HashMap<>();
-                prams.put("businessCode", businessCode);
-                prams.put("buildCode", buildCode);
-                prams.put("indeCode", indeCode);
-        HttpLoader.get(ConstantsYunZhiShui.BJCX, prams,
-                ReimburseListResponse.class, ConstantsYunZhiShui.REQUEST_CODE_BJQUERY, WringTableActivity.this, false).setTag(this);
                 break;
         }
     }
@@ -568,5 +548,32 @@ public class WringTableActivity extends BaseActivity implements HttpLoader.Respo
             holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
             return convertView;
         }
+    }
+
+
+    public void CoummtData(){
+
+        String dw=mEdUnit.getText().toString();
+        if("".equals(dw)||dw==null||"null".equals(dw)){
+            Toast.makeText(WringTableActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String gzw=ed_goujian.getText().toString();
+        if("".equals(gzw)||gzw==null||"null".equals(gzw)){
+            Toast.makeText(WringTableActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String sb=mEdzb.getText().toString();
+        if("".equals(sb)||sb==null||"null".equals(sb)){
+            Toast.makeText(WringTableActivity.this, "请选择指标", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //网络去请求
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("businessCode", businessCode);
+        prams.put("buildCode", buildCode);
+        prams.put("indeCode", indeCode);
+        HttpLoader.get(ConstantsYunZhiShui.BJCX, prams,
+                ReimburseListResponse.class, ConstantsYunZhiShui.REQUEST_CODE_BJQUERY, WringTableActivity.this, false).setTag(this);
     }
 }

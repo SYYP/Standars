@@ -29,7 +29,7 @@ import java.util.List;
  * Created by 15810 on 2019/3/1.
  */
 
-public class PumpStateActivity extends BaseActivity {
+public class PumpStateActivity extends BaseActivity implements View.OnClickListener{
     private List<String> mlist;
     private ListView minitListView;
     private LinearLayout contentView;
@@ -38,6 +38,8 @@ public class PumpStateActivity extends BaseActivity {
     private TextView tv_toolbar;
     private TextView mRightTitle;
     private WebView mWdebView;
+    private ImageButton button_fan;
+
     @Override
     protected int initContentView() {
         return R.layout.activity_pump_state;
@@ -46,11 +48,12 @@ public class PumpStateActivity extends BaseActivity {
     @Override
     protected void initView() {
         contentView = findViewById(R.id.pump_contentView);
-        button_menu= (ImageButton) findViewById(R.id.button_menu);
+        button_menu = (ImageButton) findViewById(R.id.button_menu);
         mRightTitle = (TextView) findViewById(R.id.right_title);
-        tv_toolbar= (TextView) findViewById(R.id.tv_toolbar);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        mWdebView= (WebView) findViewById(R.id.pump_wb);
+        tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mWdebView = (WebView) findViewById(R.id.pump_wb);
+        button_fan = (ImageButton) findViewById(R.id.button_fan);
         //进行webwiev的一堆设置
         //开启本地文件读取（默认为true，不设置也可以）
         mWdebView.getSettings().setAllowFileAccess(true);
@@ -98,26 +101,24 @@ public class PumpStateActivity extends BaseActivity {
         mTableDatas.add(titleList);
 
 
-
-
         ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
-        for (int i=0;i<20;i++){
+        for (int i = 0; i < 20; i++) {
             int num = (int) ((Math.random() * 9 + 1) * 100000);
             CountBean bean2 = new CountBean();
-            bean2.setT0(0+"");
+            bean2.setT0(0 + "");
             bean2.setT1("北土城");
-            bean2.setT2(i+"号泵");
+            bean2.setT2(i + "号泵");
             bean2.setT3("停止状态");
 
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
-            String t=format.format(new Date());
+            String t = format.format(new Date());
             bean2.setT4(t);
             mRowDatas.add(bean2);
         }
 
 
-        for (int i=0;i<mRowDatas.size();i++){
+        for (int i = 0; i < mRowDatas.size(); i++) {
             ArrayList<String> fieldList = new ArrayList<>();
             fieldList.add(mRowDatas.get(i).getT0());
             fieldList.add(mRowDatas.get(i).getT1());
@@ -154,18 +155,18 @@ public class PumpStateActivity extends BaseActivity {
                 .setTableViewRangeListener(new LockTableView.OnTableViewRangeListener() {
                     @Override
                     public void onLeft(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最左边");
+                        Log.e("滚动边界", "滚动到最左边");
                     }
 
                     @Override
                     public void onRight(HorizontalScrollView view) {
-                        Log.e("滚动边界","滚动到最右边");
+                        Log.e("滚动边界", "滚动到最右边");
                     }
                 })//设置横向滚动边界监听
                 .setOnLoadingListener(new LockTableView.OnLoadingListener() {
                     @Override
                     public void onRefresh(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onRefresh",Thread.currentThread().toString());
+                        Log.e("onRefresh", Thread.currentThread().toString());
 //                        Handler handler = new Handler();
 //                        handler.postDelayed(new Runnable() {
 //                            @Override
@@ -195,7 +196,7 @@ public class PumpStateActivity extends BaseActivity {
 
                     @Override
                     public void onLoadMore(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
-                        Log.e("onLoadMore",Thread.currentThread().toString());
+                        Log.e("onLoadMore", Thread.currentThread().toString());
 //                        Handler handler = new Handler();
 //                        handler.postDelayed(new Runnable() {
 //                            @Override
@@ -221,13 +222,13 @@ public class PumpStateActivity extends BaseActivity {
                 .setOnItemClickListenter(new LockTableView.OnItemClickListenter() {
                     @Override
                     public void onItemClick(View item, int position) {
-                        Log.e("点击事件",position+"");
+                        Log.e("点击事件", position + "");
                     }
                 })
                 .setOnItemLongClickListenter(new LockTableView.OnItemLongClickListenter() {
                     @Override
                     public void onItemLongClick(View item, int position) {
-                        Log.e("长按事件",position+"");
+                        Log.e("长按事件", position + "");
                     }
                 })
                 .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
@@ -251,5 +252,10 @@ public class PumpStateActivity extends BaseActivity {
         DisplayUtil.screenhightPx = dm.heightPixels;
         DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

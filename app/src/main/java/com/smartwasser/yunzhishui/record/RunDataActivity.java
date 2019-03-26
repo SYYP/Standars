@@ -87,7 +87,8 @@ public class RunDataActivity extends BaseActivity implements View.OnClickListene
     private String indeCode="";
     private Button run_data_btn;
     private TextView tv_yibiao;
-
+    private ArrayList<ArrayList<String>> mTableDatas;
+    private ImageButton button_fan;
     @Override
     protected int initContentView() {
         return R.layout.activity_run_data_quer;
@@ -108,9 +109,10 @@ public class RunDataActivity extends BaseActivity implements View.OnClickListene
         ed_type = (EditText) findViewById(R.id.ed_type);
         ed_muchtrend_strattime = (EditText) findViewById(R.id.ed_muchtrend_strattime);
         ed_muchtrend_endtime = (EditText) findViewById(R.id.ed_muchtrend_endtime);
-
+        button_fan = (ImageButton) findViewById(R.id.button_fan);
         tv_yibiao = (TextView) findViewById(R.id.tv_yibiao);
         run_data_btn = (Button) findViewById(R.id.run_data_btn);
+        run_data_btn.setOnClickListener(this);
         mEdUnit.setOnClickListener(this);
         ed_goujian.setOnClickListener(this);
         ed_yibiao.setOnClickListener(this);
@@ -131,13 +133,15 @@ public class RunDataActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initListener() {
+        button_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         initDisplayOpinion();
 
         initAdapter();
-
-
-
-
 
         mRightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,35 +176,400 @@ public class RunDataActivity extends BaseActivity implements View.OnClickListene
 
     private void initAdapter() {
         //构造假数据
-        ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
+        mTableDatas = new ArrayList<ArrayList<String>>();
         ArrayList<String> titleList = new ArrayList<>();
         titleList.add("行号");
         titleList.add("时间");
         titleList.add("数值");
         mTableDatas.add(titleList);
+    }
+
+    private void initDisplayOpinion() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        DisplayUtil.density = dm.density;
+        DisplayUtil.densityDPI = dm.densityDpi;
+        DisplayUtil.screenWidthPx = dm.widthPixels;
+        DisplayUtil.screenhightPx = dm.heightPixels;
+        DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
+        DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.button_fan:
+                finish();
+                break;
+            case R.id.ed_unit:
+                /**单位*/
+                minitListView5=initListView5();
+                PopupWindowUtils.showPopupWindow( minitListView5,mEdUnit);
+                break;
+            case R.id.ed_goujian:
+                /**构筑物*/
+                String s=ed_goujian.getText().toString();
+                if("".equals(s)||"null".equals(s)||s==null){
+                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                minitListView6=initListView6();
+                PopupWindowUtils.showPopupWindow( minitListView6,ed_goujian);
+                break;
+            case R.id.ed_yibiao:
+                /**指标*/
+                String s2=ed_yibiao.getText().toString();
+                if("".equals(s2)||"null".equals(s2)||s2==null){
+                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String  s3=ed_yibiao.getText().toString();
+                if("".equals(s3)||"null".equals(s3)||s3==null){
+                    Toast.makeText(RunDataActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                minitListView7=initListView7();
+                PopupWindowUtils.showPopupWindow( minitListView7,ed_yibiao);
+                break;
+            case R.id.ed_muchtrend_strattime:
+                /**开始时间*/
+                dialog.show(ed_muchtrend_strattime);
+                dialog.showTime();
+                break;
+            case R.id.ed_muchtrend_endtime:
+                /**结束时间*/
+                dialog.show(ed_muchtrend_endtime);
+                dialog.showTime();
+                break;
+            case R.id.ed_type:
+                minitListView3= plu.initListView9();
+                PopupWindowUtils.showPopupWindow(minitListView3, ed_type);
+                minitListView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_type.setText(plu.mListView9.get(position));
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+                break;
+            case R.id.ed_shunshi:
+//                minitListView4= plu.initListView9();
+//                PopupWindowUtils.showPopupWindow(minitListView4, ed_shunshi);
+//                minitListView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        ed_shunshi.setText(plu.mListView9.get(position));
+//                        PopupWindowUtils.closePopupWindow();
+//                    }
+//                });
+                break;
+            case R.id.ed_name:
+                minitListView2= plu.initListView8();
+                PopupWindowUtils.showPopupWindow(minitListView2, ed_name);
+                minitListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_name.setText(plu.mListView8.get(position));
+
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+                break;
+            case R.id.run_data_btn:
+                /**查询*/
+
+                String dw=mEdUnit.getText().toString();
+                if("".equals(dw)||dw==null||"null".equals(dw)){
+                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String gzw=ed_goujian.getText().toString();
+                if("".equals(gzw)||gzw==null||"null".equals(gzw)){
+                    Toast.makeText(RunDataActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String sb=ed_yibiao.getText().toString();
+                if("".equals(sb)||sb==null||"null".equals(sb)){
+                    Toast.makeText(RunDataActivity.this, "请选择设备", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String start=ed_muchtrend_strattime.getText().toString();
+                String end=ed_muchtrend_endtime.getText().toString();
+                if("".equals(start)||start==null||"null".equals(start)){
+                    Toast.makeText(RunDataActivity.this, "请选择开始时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String xiao=ed_type.getText().toString();
+                String xiaoName=ed_name.getText().toString();
+                if("".equals(xiao)||xiao==null||"null".equals(xiao)){
+                    Toast.makeText(RunDataActivity.this, "请选择查询模式", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String shun=ed_type.getText().toString();
+                /**发起网络请求*/
+                showProgressDialog();
+                HashMap<String, Object> prams = new HashMap<>();
+                if(!xiao.equals("精细查询")){
+                    if(shun.equals("瞬时值")){
+                        prams.put("indeName","INS");
+                    }else if(shun.equals("峰值")){
+                        prams.put("indeName","MAX");
+                    }else if(shun.equals("谷值")){
+                        prams.put("indeName","MIN");
+                    }else if(shun.equals("平均值")){
+                        prams.put("indeName","AVG");
+                    }
+                }
+                if(xiaoName.equals("小时查询")){
+                    prams.put("pattern","findbyhour");
+                }else if(xiaoName.equals("精细查询")){
+                    prams.put("pattern","findbyhis");
+                }
+                prams.put("businessCode",code);
+                prams.put("buildCode",buildCode);
+                prams.put("indeCode",indeCode);
+                prams.put("dataTimeFrom",start);
+                prams.put("dataTimeTo",end);
+                HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCRUNDATA, prams,
+                        RundataResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCRUNDATA, this, false).setTag(this);
+                showProgressDialog();
+                break;
+
+        }
+    }
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
+                && response instanceof BusinessUnitResponse) {
+            mBusinessUnit= (BusinessUnitResponse) response;
+            if ("00000".equals( mBusinessUnit.getErrorCode())) {
+                myBusinesAdapter = new RunDataActivity.MyBusinesAdapter();
+                minitListView5.setAdapter(myBusinesAdapter);
+                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        mEdUnit.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING
+                && response instanceof BuildingResponse) {
+            mBuilding = (BuildingResponse) response;
+            if ("00000".equals(mBuilding.getErrorCode())) {
+                myBuildingAdapter = new RunDataActivity.MyBuildingAdapter();
+                minitListView6.setAdapter( myBuildingAdapter);
+                minitListView6.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_goujian.setText(mBuilding.getData().getComboboxList().get(position).getText());
+                        buildCode = mBuilding.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA
+                && response instanceof QuotaResponse) {
+            mQuota = (QuotaResponse) response;
+            if ("00000".equals(mQuota.getErrorCode())) {
+                myQuotaAdapter = new MyQuotaAdapter();
+                minitListView7.setAdapter( myQuotaAdapter);
+                minitListView7.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ed_yibiao.setText( mQuota.getData().getComboboxList().get(position).getText());
+                        indeCode = mQuota.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+
+            }
+        }
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCRUNDATA
+                && response instanceof RundataResponse) {
+            RundataResponse mRunData=(RundataResponse)response;
+            if("00000".equals(mRunData.getErrorCode())){
+                /**跳转到指定页面,并传值*/
+//                EventBus.getDefault().postSticky(mRunData);
+                Log.d(this.getClass().getSimpleName(),mRunData.toString());
+                List<String> dataList = mRunData.getData().getDataList();
+                List<String> dateArray = mRunData.getData().getDateArray();
+                for (int i=0;i<dateArray.size();i++){
+                    ArrayList<String> fieldList = new ArrayList<>();
+                    fieldList.add(String.valueOf(i+1));
+                    fieldList.add(dateArray.get(i));
+                    fieldList.add(dataList.get(i));
+                    mTableDatas.add(fieldList);
+                }
+
+                setListData();
+
+            }
+            dismissProgressDialog();
+        }
+    }
+
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+
+    }
 
 
-        ArrayList<CountBean> mRowDatas = new ArrayList<CountBean>();
-        for (int i = 0; i < 20; i++) {
-            int num = (int) ((Math.random() * 9 + 1) * 100000);
-            CountBean bean2 = new CountBean();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
-            String t = format.format(new Date());
-            bean2.setT0(i + "");
-            bean2.setT2(num + "m3/h");
-            bean2.setT1(t);
-            mRowDatas.add(bean2);
+    class MyBusinesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mBusinessUnit.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
         }
 
-
-        for (int i = 0; i < mRowDatas.size(); i++) {
-            ArrayList<String> fieldList = new ArrayList<>();
-            fieldList.add(mRowDatas.get(i).getT0());
-            fieldList.add(mRowDatas.get(i).getT1());
-            fieldList.add(mRowDatas.get(i).getT2());
-            mTableDatas.add(fieldList);
+        @Override
+        public long getItemId(int position) {
+            return 0;
         }
 
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+
+
+    /*初始化listView*/
+
+    private ListView initListView7(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("businessCode",code);
+        prams.put("buildCode",buildCode);
+        prams.put("dataType2","A1");
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
+                QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
+        return mListViews;
+    }
+    private ListView initListView6(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        prams.put("businessCode", code);
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUILDING, prams,
+                BuildingResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING, this, false).setTag(this);
+        return mListViews;
+    }
+    private ListView initListView5(){
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
+        return mListViews;
+    }
+
+    /*适配器*/
+    class  MyBuildingAdapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return mBuilding.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBuilding.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+    class MyQuotaAdapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return mQuota.getData().getComboboxList().size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mQuota.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+    class ViewHolder{
+        TextView v_listview_item_number;
+    }
+
+
+
+    public void setListData(){
         final LockTableView mLockTableView = new LockTableView(this, contentView, mTableDatas);
         Log.e("表格加载开始", "当前线程：" + Thread.currentThread());
         mLockTableView.setLockFristColumn(false) //是否锁定第一列
@@ -316,390 +685,5 @@ public class RunDataActivity extends BaseActivity implements View.OnClickListene
         Log.e("表格所有的滚动视图", mLockTableView.getScrollViews().toString());
         Log.e("表格头部固定视图(锁列)", mLockTableView.getLockHeadView().toString());
         Log.e("表格头部固定视图(不锁列)", mLockTableView.getUnLockHeadView().toString());
-    }
-
-    private void initDisplayOpinion() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        DisplayUtil.density = dm.density;
-        DisplayUtil.densityDPI = dm.densityDpi;
-        DisplayUtil.screenWidthPx = dm.widthPixels;
-        DisplayUtil.screenhightPx = dm.heightPixels;
-        DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
-        DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.button_fan:
-                finish();
-                break;
-            case R.id.ed_unit:
-                /**单位*/
-                minitListView5=initListView5();
-                PopupWindowUtils.showPopupWindow( minitListView5,mEdUnit);
-                break;
-            case R.id.ed_goujian:
-                /**构筑物*/
-                String s=ed_goujian.getText().toString();
-                if("".equals(s)||"null".equals(s)||s==null){
-                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                minitListView6=initListView6();
-                PopupWindowUtils.showPopupWindow( minitListView6,ed_goujian);
-                break;
-            case R.id.ed_yibiao:
-                /**指标*/
-                String s2=ed_yibiao.getText().toString();
-                if("".equals(s2)||"null".equals(s2)||s2==null){
-                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String  s3=ed_yibiao.getText().toString();
-                if("".equals(s3)||"null".equals(s3)||s3==null){
-                    Toast.makeText(RunDataActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                minitListView7=initListView7();
-                PopupWindowUtils.showPopupWindow( minitListView7,ed_yibiao);
-                break;
-            case R.id.ed_muchtrend_strattime:
-                /**开始时间*/
-                dialog.show(ed_muchtrend_strattime);
-                dialog.showTime();
-                break;
-            case R.id.ed_muchtrend_endtime:
-                /**结束时间*/
-                dialog.show(ed_muchtrend_endtime);
-                dialog.showTime();
-                break;
-            case R.id.ed_type:
-                minitListView3= plu.initListView9();
-                PopupWindowUtils.showPopupWindow(minitListView3, ed_type);
-                minitListView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ed_type.setText(plu.mListView9.get(position));
-                        if("精细查询".equals( ed_type.getText().toString())){
-//                            image_shunshi.setVisibility(View.GONE);
-//                            ed_shunshi.setVisibility(View.GONE);
-                        }else{
-//                            image_shunshi.setVisibility(View.VISIBLE);
-//                            ed_shunshi.setVisibility(View.VISIBLE);
-                        }
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
-                break;
-            case R.id.ed_shunshi:
-//                minitListView4= plu.initListView9();
-//                PopupWindowUtils.showPopupWindow(minitListView4, ed_shunshi);
-//                minitListView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        ed_shunshi.setText(plu.mListView9.get(position));
-//                        PopupWindowUtils.closePopupWindow();
-//                    }
-//                });
-                break;
-            case R.id.ed_name:
-                minitListView2= plu.initListView8();
-                PopupWindowUtils.showPopupWindow(minitListView2, ed_name);
-                minitListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ed_name.setText(plu.mListView8.get(position));
-                        if("精细查询".equals( ed_type.getText().toString())){
-//                            image_shunshi.setVisibility(View.GONE);
-//                            ed_shunshi.setVisibility(View.GONE);
-                        }else{
-//                            image_shunshi.setVisibility(View.VISIBLE);
-//                            ed_shunshi.setVisibility(View.VISIBLE);
-                        }
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
-                break;
-            case R.id.run_data_btn:
-                /**查询*/
-
-                String dw=mEdUnit.getText().toString();
-                if("".equals(dw)||dw==null||"null".equals(dw)){
-                    Toast.makeText(RunDataActivity.this, "请选择单位", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String gzw=ed_goujian.getText().toString();
-                if("".equals(gzw)||gzw==null||"null".equals(gzw)){
-                    Toast.makeText(RunDataActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String sb=ed_yibiao.getText().toString();
-                if("".equals(sb)||sb==null||"null".equals(sb)){
-                    Toast.makeText(RunDataActivity.this, "请选择设备", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String start=ed_muchtrend_strattime.getText().toString();
-                String end=ed_muchtrend_endtime.getText().toString();
-                if("".equals(start)||start==null||"null".equals(start)){
-                    Toast.makeText(RunDataActivity.this, "请选择开始时间", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String xiao=ed_type.getText().toString();
-                if("".equals(xiao)||xiao==null||"null".equals(xiao)){
-                    Toast.makeText(RunDataActivity.this, "请选择查询模式", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String shun=ed_type.getText().toString();
-                /**发起网络请求*/
-                showProgressDialog();
-                HashMap<String, Object> prams = new HashMap<>();
-                if(!xiao.equals("精细查询")){
-                    if(shun.equals("瞬时值")){
-                        prams.put("indeName","INS");
-                    }else if(shun.equals("峰值")){
-                        prams.put("indeName","MAX");
-                    }else if(shun.equals("谷值")){
-                        prams.put("indeName","MIN");
-                    }else if(shun.equals("平均值")){
-                        prams.put("indeName","AVG");
-                    }
-                }
-                if(xiao.equals("小时查询")){
-                    prams.put("pattern","findbyhour");
-                }else if(xiao.equals("精细查询")){
-                    prams.put("pattern","findbyhis");
-                }
-                prams.put("businessCode",code);
-                prams.put("buildCode",buildCode);
-                prams.put("indeCode",indeCode);
-                prams.put("dataTimeFrom",start);
-                prams.put("dataTimeTo",end);
-                HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCRUNDATA, prams,
-                        RundataResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCRUNDATA, this, false).setTag(this);
-                showProgressDialog();
-                break;
-
-        }
-    }
-
-    @Override
-    public void onGetResponseSuccess(int requestCode, RBResponse response) {
-        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
-                && response instanceof BusinessUnitResponse) {
-            mBusinessUnit= (BusinessUnitResponse) response;
-            if ("00000".equals( mBusinessUnit.getErrorCode())) {
-                myBusinesAdapter = new RunDataActivity.MyBusinesAdapter();
-                minitListView5.setAdapter(myBusinesAdapter);
-                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        mEdUnit.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
-                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
-            }
-        }
-        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING
-                && response instanceof BuildingResponse) {
-            mBuilding = (BuildingResponse) response;
-            if ("00000".equals(mBuilding.getErrorCode())) {
-                myBuildingAdapter = new RunDataActivity.MyBuildingAdapter();
-                minitListView6.setAdapter( myBuildingAdapter);
-                minitListView6.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ed_goujian.setText(mBuilding.getData().getComboboxList().get(position).getText());
-                        buildCode = mBuilding.getData().getComboboxList().get(position).getId();
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
-
-            }
-        }
-        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA
-                && response instanceof QuotaResponse) {
-            mQuota = (QuotaResponse) response;
-            if ("00000".equals(mQuota.getErrorCode())) {
-                myQuotaAdapter = new MyQuotaAdapter();
-                minitListView7.setAdapter( myQuotaAdapter);
-                minitListView7.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ed_yibiao.setText( mQuota.getData().getComboboxList().get(position).getText());
-                        indeCode = mQuota.getData().getComboboxList().get(position).getId();
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
-
-            }
-        }
-        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCRUNDATA
-                && response instanceof RundataResponse) {
-            RundataResponse mRunData=(RundataResponse)response;
-            if("00000".equals(mRunData.getErrorCode())){
-                /**跳转到指定页面,并传值*/
-                EventBus.getDefault().postSticky(mRunData);
-                Intent intent=new Intent(RunDataActivity.this,RunDataReslutActivity.class);
-                startActivity(intent);
-            }
-            dismissProgressDialog();
-        }
-    }
-
-    @Override
-    public void onGetResponseError(int requestCode, VolleyError error) {
-
-    }
-
-
-    class MyBusinesAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return mBusinessUnit.getData().getComboboxList().size();
-        }
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
-                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            if (position == 0) {
-                holder.v_listview_item_number.setTextColor(Color.GRAY);
-            }
-            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
-            return convertView;
-        }
-    }
-
-
-    /*初始化listView*/
-
-    private ListView initListView7(){
-        ListView mListViews = new ListView(this);
-        mListViews.setDividerHeight(0);
-        mListViews.setBackgroundResource(R.drawable.listview_background);
-        // 去掉右侧垂直滑动条
-        mListViews.setVerticalScrollBarEnabled(false);
-        /**发起网络请求*/
-        HashMap<String, Object> prams = new HashMap<>();
-        prams.put("businessCode",code);
-        prams.put("buildCode",buildCode);
-        prams.put("dataType2","A1");
-        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
-                QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
-        return mListViews;
-    }
-    private ListView initListView6(){
-        ListView mListViews = new ListView(this);
-        mListViews.setDividerHeight(0);
-        mListViews.setBackgroundResource(R.drawable.listview_background);
-        // 去掉右侧垂直滑动条
-        mListViews.setVerticalScrollBarEnabled(false);
-        /**发起网络请求*/
-        HashMap<String, Object> prams = new HashMap<>();
-        prams.put("businessCode", code);
-        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUILDING, prams,
-                BuildingResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING, this, false).setTag(this);
-        return mListViews;
-    }
-    private ListView initListView5(){
-        ListView mListViews = new ListView(this);
-        mListViews.setDividerHeight(0);
-        mListViews.setBackgroundResource(R.drawable.listview_background);
-        // 去掉右侧垂直滑动条
-        mListViews.setVerticalScrollBarEnabled(false);
-        /**发起网络请求*/
-        HashMap<String, Object> prams = new HashMap<>();
-        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,
-                BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
-        return mListViews;
-    }
-
-    /*适配器*/
-    class  MyBuildingAdapter extends BaseAdapter{
-        @Override
-        public int getCount() {
-            return mBuilding.getData().getComboboxList().size();
-        }
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
-                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            if (position == 0) {
-                holder.v_listview_item_number.setTextColor(Color.GRAY);
-            }
-            holder.v_listview_item_number.setText(mBuilding.getData().getComboboxList().get(position).getText());
-            return convertView;
-        }
-    }
-    class MyQuotaAdapter extends BaseAdapter{
-        @Override
-        public int getCount() {
-            return mQuota.getData().getComboboxList().size();
-        }
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = View.inflate(RunDataActivity.this, R.layout.item_search, null);
-                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            if (position == 0) {
-                holder.v_listview_item_number.setTextColor(Color.GRAY);
-            }
-            holder.v_listview_item_number.setText(mQuota.getData().getComboboxList().get(position).getText());
-            return convertView;
-        }
-    }
-    class ViewHolder{
-        TextView v_listview_item_number;
     }
 }

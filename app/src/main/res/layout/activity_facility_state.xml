@@ -105,6 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="invisible"
                 android:layout_marginLeft="@dimen/base200dp"
                 android:text="查询模式:"
                 android:textSize="@dimen/base13dp" />
@@ -118,6 +119,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/base5dp"
                 android:text="请选择"
+                android:visibility="invisible"
                 android:textColor="#4c8fd2"
                 android:layout_gravity="center"
                 android:background="@drawable/editext_shape_two"
@@ -148,6 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/base24dp"
             android:text="取值类型："
             android:textSize="@dimen/base13dp" />
@@ -160,6 +163,7 @@
             android:background="@drawable/editext_shape_two"
             android:drawableRight="@drawable/xiaxia"
             android:editable="false"
+            android:visibility="gone"
             android:paddingLeft="@dimen/base5dp"
             android:text="瞬取值"
             android:gravity="center"
@@ -174,7 +178,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/base150dp"
             android:text="时间:"
-            android:textColor="#101010"
             android:textSize="@dimen/base13dp" />
 
         <LinearLayout
@@ -207,7 +210,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/base13dp"
             android:text="至"
-            android:textColor="#101010"
             android:textSize="@dimen/base13dp" />
 
         <LinearLayout

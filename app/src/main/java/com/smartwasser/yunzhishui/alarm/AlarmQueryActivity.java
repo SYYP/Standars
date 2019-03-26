@@ -145,8 +145,7 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
         initDisplayOpinion();
 
         initAdapter();
-        /**单位*/
-        minitListView5 = initListView5();
+
 
     }
 
@@ -315,11 +314,10 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.tv_edit_name://单位
 //                /**单位*/
-//                minitListView5 = initListView5();
-//                PopupWindowUtils.showPopupWindow(minitListView5, mTvEditName);
+                minitListView5 = initListView5();
+                PopupWindowUtils.showPopupWindow(minitListView5, mTvEditName);
                 /**构筑物*/
 
-                minitListView6 = initListView6();
                 break;
             case R.id.tv_bm://构筑物
                 String s = mTvEditName.getText().toString();
@@ -328,8 +326,8 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
 
-                /**指标*/
-                minitListView7 = initListView7();
+                minitListView6=initListView6();
+                PopupWindowUtils.showPopupWindow( minitListView6,mTvBm);
                 break;
             case R.id.tv_zb://指标
                 String s2 = mTvEditName.getText().toString();
@@ -342,6 +340,7 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
                     Toast.makeText(AlarmQueryActivity.this, "请选择构筑物", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                minitListView7=initListView7();
                 PopupWindowUtils.showPopupWindow(minitListView7, mTvZb);
                 break;
             case R.id.ed_muchtrend_strattime://开始时间
@@ -457,6 +456,13 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
                 });
 
             }
+        }if (requestCode==ConstantsYunZhiShui.REQUEST_CODE_HISTORY_QUERY
+                && response instanceof RundataResponse){
+            RundataResponse rundataResponse = (RundataResponse) response;
+            RundataResponse.DataEntity data = rundataResponse.getData();
+            if (data==null){
+                Toast.makeText(this,"这段时间没有数据",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -515,7 +521,6 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
         prams.put("dataType2", "A1");
         HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
                 QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
-        PopupWindowUtils.showPopupWindow(minitListView6, mTvBm);
         return mListViews;
     }
 
@@ -566,7 +571,6 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
         prams.put("businessCode", businessCode);
         HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUILDING, prams,
                 BuildingResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUILDING, this, false).setTag(this);
-        PopupWindowUtils.showPopupWindow(minitListView5, mTvEditName);
         return mListViews;
     }
 

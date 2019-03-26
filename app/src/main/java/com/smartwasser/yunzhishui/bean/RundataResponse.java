@@ -83,6 +83,16 @@ public class RundataResponse extends RBResponse{
             return dataList;
         }
 
+        @Override
+        public String toString() {
+            return "DataEntity{" +
+                    "maxValue=" + maxValue +
+                    ", minValue=" + minValue +
+                    ", dataList=" + dataList +
+                    ", dateArray=" + dateArray +
+                    '}';
+        }
+
         public List<String> getDateArray() {
             return dateArray;
         }
