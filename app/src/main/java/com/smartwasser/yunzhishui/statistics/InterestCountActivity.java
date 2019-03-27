@@ -1,12 +1,15 @@
 package com.smartwasser.yunzhishui.statistics;
 
+import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -14,27 +17,36 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.rmondjone.locktableview.DisplayUtil;
 import com.rmondjone.locktableview.LockTableView;
 import com.rmondjone.xrecyclerview.ProgressStyle;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
+import com.smartwasser.yunzhishui.alarmbean.BuildCountBean;
 import com.smartwasser.yunzhishui.alarmbean.IntersetBean;
+import com.smartwasser.yunzhishui.alarmbean.SblylBean;
+import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
+import com.smartwasser.yunzhishui.bean.RBResponse;
 import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
+import com.smartwasser.yunzhishui.net.HttpLoader;
+import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
 import com.smartwasser.yunzhishui.utils.ListViewUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by 15810 on 2019/2/27.
  */
 
-public class InterestCountActivity extends BaseActivity {
+public class InterestCountActivity extends BaseActivity implements HttpLoader.ResponseListener {
     private List<String> mlist;
     private ListView minitListView;
     private EditText mEInterset;
@@ -48,7 +60,13 @@ public class InterestCountActivity extends BaseActivity {
     private EditText ed_interset_rdit;
     private EditText tv_interset_endtime;
     private Button count_shui_chang_btn;
+    private ListView minitListView5;
     private DialogTimeUtils dialog = new DialogTimeUtils(this);
+    private BusinessUnitResponse mBusinessUnit;
+    MyBusinesAdapter mMyBusinesAdapter;
+    String code = "";
+    private TextView mCountReset;
+
     @Override
     protected int initContentView() {
         return R.layout.activity_interset_count;
@@ -61,11 +79,19 @@ public class InterestCountActivity extends BaseActivity {
         button_menu = (ImageButton) findViewById(R.id.button_menu);
         mRightTitle = (TextView) findViewById(R.id.right_title);
         tv_toolbar = (TextView) findViewById(R.id.tv_toolbar);
+        mCountReset = findViewById(R.id.count_reset);//重置
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebView = findViewById(R.id.chartshow_wbs);
         count_shui_chang_btn = findViewById(R.id.count_shui_chang_btn);
         ed_interset_rdit = findViewById(R.id.ed_interset_rdit);
         tv_interset_endtime = findViewById(R.id.tv_interset_endtime);
+        mCountReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEInterset.setText("");
+                ed_interset_rdit.setText("");
+            }
+        });
         ed_interset_rdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +112,21 @@ public class InterestCountActivity extends BaseActivity {
         count_shui_chang_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String indexMenu = mEInterset.getText().toString();
+                String time = ed_interset_rdit.getText().toString();
+                if (indexMenu == null) {
+                    Toast.makeText(InterestCountActivity.this, "报表类型不能为空", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (time == null) {
+                    Toast.makeText(InterestCountActivity.this, "开始时间选择不能为空", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                HashMap<String, Object> prams = new HashMap<>();
+                prams.put("unitCode", code);
+                prams.put("dataYear", time);
+                HttpLoader.get(ConstantsYunZhiShui.NEWSHUIZHIYUN.CSBLYL, prams,
+                        SblylBean.class, ConstantsYunZhiShui.NEWSHUIZHIYUN.CSBLYL_CODE, InterestCountActivity.this, false).setTag(this);
 
             }
         });
@@ -102,7 +143,6 @@ public class InterestCountActivity extends BaseActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
 
 
-
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
@@ -117,12 +157,12 @@ public class InterestCountActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String btnText = mRightTitle.getText().toString();
-                if ("报表".equals(btnText)){
+                if ("报表".equals(btnText)) {
                     mWebView.loadUrl("javascript:doCreatChart('bar',[89,78,77,44,66,83,56,26,97,56,12,48]);");
                     contentView.setVisibility(View.GONE);
                     mWebView.setVisibility(View.VISIBLE);
                     mRightTitle.setText("表格");
-                }else {
+                } else {
                     contentView.setVisibility(View.VISIBLE);
                     mWebView.setVisibility(View.GONE);
                     mRightTitle.setText("报表");
@@ -141,16 +181,9 @@ public class InterestCountActivity extends BaseActivity {
         mEInterset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListViewUtils utils = new ListViewUtils(getApplicationContext());
-                minitListView = utils.initListView(mlist);
-                PopupWindowUtils.showPopupWindow(minitListView, mEInterset);
-                minitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        mEInterset.setText(mlist.get(position));
-                        PopupWindowUtils.closePopupWindow();
-                    }
-                });
+                /**单位*/
+                minitListView5 = initListView5();
+                PopupWindowUtils.showPopupWindow(minitListView5, mEInterset);
             }
         });
         button_menu.setOnClickListener(new View.OnClickListener() {
@@ -372,12 +405,11 @@ public class InterestCountActivity extends BaseActivity {
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
 
 
-
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width=dm.widthPixels;
+        int width = dm.widthPixels;
 
-        int height=dm.heightPixels;
+        int height = dm.heightPixels;
 
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mWebView.getLayoutParams();
 
@@ -385,6 +417,96 @@ public class InterestCountActivity extends BaseActivity {
         linearParams.width = width;
 
         mWebView.setLayoutParams(linearParams);
+    }
+
+    private ListView initListView5() {
+
+        ListView mListViews = new ListView(this);
+        mListViews.setDividerHeight(0);
+        mListViews.setBackgroundResource(R.drawable.listview_background);
+        // 去掉右侧垂直滑动条
+        mListViews.setVerticalScrollBarEnabled(false);
+        /**发起网络请求*/
+        HashMap<String, Object> prams = new HashMap<>();
+        HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCBUSINESS, prams,
+                BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
+        return mListViews;
+    }
+
+    @Override
+    public void onGetResponseSuccess(int requestCode, RBResponse response) {
+        if (requestCode == ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS
+                && response instanceof BusinessUnitResponse) {
+            mBusinessUnit = (BusinessUnitResponse) response;
+            if ("00000".equals(mBusinessUnit.getErrorCode())) {
+                mMyBusinesAdapter = new MyBusinesAdapter();
+                minitListView5.setAdapter(mMyBusinesAdapter);
+                minitListView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        mEInterset.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+                        code = mBusinessUnit.getData().getComboboxList().get(position).getId();
+                        PopupWindowUtils.closePopupWindow();
+                    }
+                });
+            }
+            if (requestCode == ConstantsYunZhiShui.NEWSHUIZHIYUN.BUILDCOUNT_CODE
+                    && response instanceof SblylBean) {
+                //查询的厂用电量
+                SblylBean buildCountBean = (SblylBean) response;
+                if ("error".equals(buildCountBean.getErrorMsg())) {
+                    Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String s = buildCountBean.getData().toString();
+                Log.d(this.getClass().getSimpleName(), s);
+            }
+        }
+    }
+
+    @Override
+    public void onGetResponseError(int requestCode, VolleyError error) {
+
+    }
+
+    /*条目的适配器*/
+    class MyBusinesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mBusinessUnit.getData().getComboboxList().size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = View.inflate(InterestCountActivity.this, R.layout.item_search, null);
+                holder.v_listview_item_number = (TextView) convertView.findViewById(R.id.tv_listview_item_number);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            if (position == 0) {
+                holder.v_listview_item_number.setTextColor(Color.GRAY);
+            }
+            holder.v_listview_item_number.setText(mBusinessUnit.getData().getComboboxList().get(position).getText());
+            return convertView;
+        }
+    }
+
+    class ViewHolder {
+        TextView v_listview_item_number;
     }
 
 }

@@ -746,7 +746,15 @@ public class ConstantsYunZhiShui {
         String PAGEBASEURL=BASE_URL+"/dh/menuList";
 
         String BUILDCOUNT_URL=BASE_URL+"/waterStat/flowStat";
-        int BUILDCOUNT_CODE=1009;
+        int CYDL_CODE=10010;
 
+        String GZUYONGDL=BASE_URL+"/energyStat/buildMonthStat";
+        int BUILDCOUNT_CODE=1009;
+        String CSBLYL=BASE_URL+"/waterStat/usageStat";
+        int CSBLYL_CODE=10011;//设备利用率
+        String CYDLYEAR=BASE_URL+"/energyStat/yearStat";
+        int CYDLYEAR_CODE=10012;//设备利用率
+        String FGSMOUTHS=BASE_URL+"/energyStat/yearStat";
+        int FGSMOUTHS_CODE=10013;//分公司通电月
     }
 }

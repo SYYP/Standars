@@ -26,6 +26,8 @@ import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
+import com.smartwasser.yunzhishui.alarmbean.FgsYdlBean;
+import com.smartwasser.yunzhishui.alarmbean.SblylBean;
 import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
 import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
@@ -327,6 +329,12 @@ public class ElectricCountActivity extends BaseActivity implements View.OnClickL
                     Toast.makeText(this,"结束时间选择不能为空",Toast.LENGTH_LONG).show();
                 }
 
+                HashMap<String, Object> prams = new HashMap<>();
+                prams.put("unitCode", code);
+                prams.put("dataYear", time);
+                HttpLoader.get(ConstantsYunZhiShui.NEWSHUIZHIYUN.CYDLYEAR, prams,
+                        SblylBean.class, ConstantsYunZhiShui.NEWSHUIZHIYUN.CYDLYEAR_CODE, ElectricCountActivity.this, false).setTag(this);
+
 
                 break;
         }
@@ -361,6 +369,17 @@ public class ElectricCountActivity extends BaseActivity implements View.OnClickL
                         PopupWindowUtils.closePopupWindow();
                     }
                 });
+            }
+            if (requestCode == ConstantsYunZhiShui.NEWSHUIZHIYUN.BUILDCOUNT_CODE
+                    && response instanceof FgsYdlBean) {
+                //查询的厂用电量
+                FgsYdlBean buildCountBean = (FgsYdlBean) response;
+                if ("error".equals(buildCountBean.getErrorMsg())) {
+                    Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String s = buildCountBean.getData().toString();
+                Log.d(this.getClass().getSimpleName(), s);
             }
         }
     }

@@ -66,19 +66,19 @@ public class StatisticsActivity extends BaseActivity implements HttpLoader.Respo
                 Intent intent = null;
                 switch (i) {
                     case 0:
-                        intent   = new Intent(StatisticsActivity.this,ContInflowActivity.class);
+                        intent   = new Intent(StatisticsActivity.this,ContInflowActivity.class);//厂进水量指标统计
                         break;
                     case 1:
-                        intent = new Intent(StatisticsActivity.this,InterestCountActivity.class);
+                        intent = new Intent(StatisticsActivity.this,InterestCountActivity.class);//设备利用率
                         break;
                     case 2:
-                        intent = new Intent(StatisticsActivity.this,ElectricCountActivity.class);
+                        intent = new Intent(StatisticsActivity.this,ElectricCountActivity.class);//分公司用电量年报
                         break;
                     case 3:
-                        intent= new Intent(StatisticsActivity.this,EcectrMothActivity.class);
+                        intent= new Intent(StatisticsActivity.this,EcectrMothActivity.class);//分公司用电月
                         break;
                     case 4:
-                        intent = new Intent(StatisticsActivity.this,BuildCountActivity.class);
+                        intent = new Intent(StatisticsActivity.this,BuildCountActivity.class);//生产线用电量
 
                         break;
                 }
