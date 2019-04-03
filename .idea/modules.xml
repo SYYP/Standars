@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/StandardMonito.iml" filepath="$PROJECT_DIR$/StandardMonito.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Standars.iml" filepath="$PROJECT_DIR$/Standars.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/devpkg-android/devpkg-android.iml" filepath="$PROJECT_DIR$/devpkg-android/devpkg-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />

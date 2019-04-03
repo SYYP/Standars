@@ -671,6 +671,7 @@ public class ConstantsYunZhiShui {
      * 构建物
      */
     public static final String URL_ZXJCBUILDING = URL_SERVERssssss + "/ComboboxApp/getBuildCodeCombobox/";
+
     public static final int
             REQUEST_CODE_ZXJCBUILDING = 108;
     /**

@@ -1,8 +1,6 @@
-package com.smartwasser.yunzhishui.datatable;
+package com.smartwasser.yunzhishui.alarm;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,17 +24,13 @@ import com.rmondjone.xrecyclerview.ProgressStyle;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
-import com.smartwasser.yunzhishui.adapter.alarm.Tadapter;
 import com.smartwasser.yunzhishui.alarmbean.ContentBean;
 import com.smartwasser.yunzhishui.bean.BuildingResponse;
 import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.QuotaResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
 import com.smartwasser.yunzhishui.bean.ReimburseListResponse;
-import com.smartwasser.yunzhishui.bean.RundataResponse;
 import com.smartwasser.yunzhishui.net.HttpLoader;
-import com.smartwasser.yunzhishui.record.RunDataActivity;
-import com.smartwasser.yunzhishui.rmonactivity.RunDataReslutActivity;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
 
@@ -44,10 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by 15810 on 2019/2/22.
@@ -434,7 +424,7 @@ public class WringTableActivity extends BaseActivity implements HttpLoader.Respo
         HashMap<String, Object> prams = new HashMap<>();
         prams.put("businessCode", businessCode);
         prams.put("buildCode", buildCode);
-        prams.put("dataType2", "A1");
+        prams.put("dataType2", "B1");
         HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
                 QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
         return mListViews;

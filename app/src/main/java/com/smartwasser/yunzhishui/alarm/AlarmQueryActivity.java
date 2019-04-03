@@ -29,9 +29,7 @@ import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.QuotaResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
 import com.smartwasser.yunzhishui.bean.RundataResponse;
-import com.smartwasser.yunzhishui.datatable.WringTableActivity;
 import com.smartwasser.yunzhishui.net.HttpLoader;
-import com.smartwasser.yunzhishui.record.RunDataActivity;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 import com.smartwasser.yunzhishui.utils.DialogTimeUtils;
 import com.smartwasser.yunzhishui.utils.PopupWindowUtils;
@@ -518,7 +516,7 @@ public class AlarmQueryActivity extends BaseActivity implements View.OnClickList
         HashMap<String, Object> prams = new HashMap<>();
         prams.put("businessCode", businessCode);
         prams.put("buildCode", buildCode);
-        prams.put("dataType2", "A1");
+        prams.put("dataType2", "B1");
         HttpLoader.get(ConstantsYunZhiShui.URL_ZXJCQUOTA, prams,
                 QuotaResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCQUOTA, this, false).setTag(this);
         return mListViews;

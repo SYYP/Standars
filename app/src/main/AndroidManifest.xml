@@ -165,7 +165,7 @@
         <activity android:name=".alarm.StatisticsActivity"></activity>
         <activity android:name=".alarm.AlarmActivity"></activity>
         <activity
-            android:name=".datatable.WringTableActivity"
+            android:name=".alarm.WringTableActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
           ></activity>
         <activity

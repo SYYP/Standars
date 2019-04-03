@@ -14,7 +14,6 @@ import com.smartwasser.yunzhishui.R;
 import com.smartwasser.yunzhishui.adapter.alarm.Tadapter;
 import com.smartwasser.yunzhishui.bean.RBResponse;
 import com.smartwasser.yunzhishui.bean.RmonMenuResponse;
-import com.smartwasser.yunzhishui.datatable.WringTableActivity;
 import com.smartwasser.yunzhishui.net.HttpLoader;
 import com.smartwasser.yunzhishui.utils.ConstantsYunZhiShui;
 
