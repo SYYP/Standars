@@ -61,6 +61,7 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -87,8 +88,8 @@
                     android:layout_gravity="center"
                     android:background="@drawable/editext_shape_two"
                     android:editable="false"
-                    android:paddingLeft="@dimen/base5dp"
                     android:gravity="center"
+                    android:paddingLeft="@dimen/base5dp"
                     android:text="全年设备利率里"
                     android:textColor="#4c8fd2"
                     android:textSize="@dimen/base12dp" />
@@ -135,34 +136,36 @@
                     android:id="@+id/tv_time2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="至"
-                    android:textSize="@dimen/base13dp"
-                    android:textColor="#101010"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/base13dp"
-                    />
+                    android:text="至"
+                    android:textColor="#101010"
+                    android:textSize="@dimen/base13dp"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:layout_width="@dimen/base130dp"
-                    android:background="@drawable/editext_shape_two"
-                    android:layout_marginLeft="@dimen/base10dp"
+                    android:layout_height="@dimen/base27dp"
                     android:layout_gravity="center"
-                    android:layout_height="@dimen/base27dp">
+                    android:layout_marginLeft="@dimen/base10dp"
+                    android:background="@drawable/editext_shape_two"
+                    android:visibility="gone">
+
                     <EditText
                         android:id="@+id/tv_interset_endtime"
                         android:layout_width="@dimen/base100dp"
-                        android:textColor="#4c8fd2"
                         android:layout_height="@dimen/base27dp"
-                        android:editable="false"
-                        android:background="@null"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:textSize="@dimen/base15dp"
-                        />
+                        android:background="@null"
+                        android:editable="false"
+                        android:gravity="center"
+                        android:textColor="#4c8fd2"
+                        android:textSize="@dimen/base15dp" />
+
                     <ImageButton
                         android:id="@+id/but_electricity_endtime"
                         style="@style/Ibutton"
-                        android:layout_gravity="center"
-                        />
+                        android:layout_gravity="center" />
                 </LinearLayout>
 
                 <TextView
@@ -173,20 +176,19 @@
                     android:layout_marginLeft="@dimen/base50dp"
                     android:background="@drawable/editext_shape_two"
                     android:gravity="center"
-                    android:textColor="#4c8fd2"
                     android:text="重置"
+                    android:textColor="#4c8fd2"
                     android:textSize="@dimen/base16dp" />
 
                 <Button
+                    android:id="@+id/count_shui_chang_btn"
                     android:layout_width="@dimen/base70dp"
                     android:layout_height="@dimen/base27dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/base30dp"
                     android:background="@drawable/editext_shape_two"
                     android:text="查询"
-                    android:layout_marginLeft="@dimen/base30dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/count_shui_chang_btn"
-                    android:textSize="@dimen/base15dp"
-                    />
+                    android:textSize="@dimen/base15dp" />
             </LinearLayout>
 
         </LinearLayout>

@@ -25,6 +25,7 @@ import com.rmondjone.xrecyclerview.ProgressStyle;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 import com.smartwasser.yunzhishui.Activity.BaseActivity;
 import com.smartwasser.yunzhishui.R;
+import com.smartwasser.yunzhishui.alarmbean.BuildCountBean;
 import com.smartwasser.yunzhishui.alarmbean.CountBean;
 import com.smartwasser.yunzhishui.bean.BusinessUnitResponse;
 import com.smartwasser.yunzhishui.bean.RBResponse;
@@ -92,13 +93,10 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
         //开启脚本支持
         mWdebView.getSettings().setJavaScriptEnabled(true);
         mWdebView.loadUrl("file:///android_asset/myechart.html");
-
-
         tv_shui_chang_edit = findViewById(R.id.tv_shui_chang_edit);
         ed_count_strattime = findViewById(R.id.ed_count_strattime);
         tv_shui_chang_edit.setOnClickListener(this);
         ed_count_strattime.setOnClickListener(this);
-
         button_menu.setVisibility(View.VISIBLE);
         button_menu.setBackgroundResource(R.drawable.fanhu);
         toolbar.setTitle("");
@@ -387,6 +385,13 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
                     Toast.makeText(this,"结束时间选择不能为空",Toast.LENGTH_LONG).show();
                 }
 
+                HashMap<String, Object> prams = new HashMap<>();
+                prams.put("unitCode",code);
+                prams.put("dateFrom",time);
+                prams.put("dateTo",endTime);
+                HttpLoader.get(ConstantsYunZhiShui.NEWSHUIZHIYUN.BUILDCOUNT_URL, prams,
+                        BuildCountBean.class, ConstantsYunZhiShui.NEWSHUIZHIYUN.CYDL_CODE, this, false).setTag(this);
+
 
                 break;
         }
@@ -408,6 +413,17 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
                         PopupWindowUtils.closePopupWindow();
                     }
                 });
+            }
+            if (requestCode == ConstantsYunZhiShui.NEWSHUIZHIYUN.BUILDCOUNT_CODE
+                    &&response instanceof BuildCountBean) {
+                       //查询的厂用电量
+                BuildCountBean buildCountBean = (BuildCountBean) response;
+                if("error".equals(buildCountBean.getErrorMsg())) {
+                    Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String s = buildCountBean.getData().toString();
+                Log.d(this.getClass().getSimpleName(),s);
             }
         }
     }
@@ -472,6 +488,7 @@ public class ContInflowActivity extends BaseActivity implements View.OnClickList
                 BusinessUnitResponse.class, ConstantsYunZhiShui.REQUEST_CODE_ZXJCBUSINESS, this, false).setTag(this);
         return mListViews;
     }
+
 
 
 
